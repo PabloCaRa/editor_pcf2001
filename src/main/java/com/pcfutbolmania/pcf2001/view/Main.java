@@ -5,8 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,8 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import org.apache.commons.collections4.MapUtils;
 
 import com.pcfutbolmania.pcf2001.controller.MainController;
 import com.pcfutbolmania.pcf2001.exception.EpcfException;
@@ -39,6 +43,8 @@ public class Main {
 	private JFrame frmEpcf;
 	private MainController mainController;
 
+	private boolean filesLoaded;
+
 	private Map<Integer, Player> players;
 	private Map<Integer, Stadium> stadiums;
 	private Map<Integer, Coach> coaches;
@@ -54,6 +60,7 @@ public class Main {
 			public void run() {
 				try {
 					Main window = new Main();
+					window.frmEpcf.setLocationRelativeTo(null);
 					window.frmEpcf.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,6 +88,8 @@ public class Main {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
+		filesLoaded = false;
+
 		mainController = new MainController();
 		initialize();
 	}
@@ -92,7 +101,7 @@ public class Main {
 		frmEpcf = new JFrame();
 		frmEpcf.setTitle("EPCF 2001");
 		frmEpcf.setResizable(false);
-		frmEpcf.setBounds(100, 100, 450, 300);
+		frmEpcf.setBounds(400, 400, 450, 300);
 		frmEpcf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -104,77 +113,79 @@ public class Main {
 
 		JMenuItem mntmLoad = new JMenuItem("Cargar todo");
 		mntmLoad.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 
 					ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-					executorService.submit(new Runnable() {
-						@Override
-						public void run() {
-							System.out.println("Inicio carga estadios " + Calendar.getInstance().getTime());
-							stadiums = mainController.loadStadiums();
-							System.out.println("Fin carga estadios " + Calendar.getInstance().getTime());
-						}
+					Future<Boolean> loadedStadium = executorService.submit(() -> {
+						System.out.println("Inicio carga estadios " + Calendar.getInstance().getTime());
+						stadiums = mainController.loadStadiums();
+						System.out.println("Fin carga estadios " + Calendar.getInstance().getTime());
+						return MapUtils.isNotEmpty(stadiums);
 					});
 
-					executorService.submit(new Runnable() {
-						@Override
-						public void run() {
-							System.out.println("Inicio carga entrenadores " + Calendar.getInstance().getTime());
-							coaches = mainController.loadCoaches();
-							System.out.println("Fin carga entrenadores " + Calendar.getInstance().getTime());
-						}
+					Future<Boolean> loadedCoaches = executorService.submit(() -> {
+						System.out.println("Inicio carga entrenadores " + Calendar.getInstance().getTime());
+						coaches = mainController.loadCoaches();
+						System.out.println("Fin carga entrenadores " + Calendar.getInstance().getTime());
+						return MapUtils.isNotEmpty(coaches);
 					});
 
-					executorService.submit(new Runnable() {
-						@Override
-						public void run() {
-							System.out.println("Inicio carga jugadores " + Calendar.getInstance().getTime());
-							players = mainController.loadPlayers();
-							System.out.println("Fin carga jugadores " + Calendar.getInstance().getTime());
-						}
+					Future<Boolean> loadedPlayers = executorService.submit(() -> {
+						System.out.println("Inicio carga jugadores " + Calendar.getInstance().getTime());
+						players = mainController.loadPlayers();
+						System.out.println("Fin carga jugadores " + Calendar.getInstance().getTime());
+						return MapUtils.isNotEmpty(players);
 					});
 
-					executorService.submit(new Runnable() {
-						@Override
-						public void run() {
-							System.out.println("Inicio carga equipos " + Calendar.getInstance().getTime());
-							teams = mainController.loadTeams();
-							System.out.println("Fin carga equipos " + Calendar.getInstance().getTime());
-						}
+					Future<Boolean> loadedTeams = executorService.submit(() -> {
+						System.out.println("Inicio carga equipos " + Calendar.getInstance().getTime());
+						teams = mainController.loadTeams();
+						System.out.println("Fin carga equipos " + Calendar.getInstance().getTime());
+						return MapUtils.isNotEmpty(teams);
 					});
 
-					executorService.submit(new Runnable() {
-						@Override
-						public void run() {
-							System.out.println("Inicio carga textos " + Calendar.getInstance().getTime());
-							countries = mainController.loadCountries();
-							System.out.println("Fin carga textos " + Calendar.getInstance().getTime());
-						}
+					Future<Boolean> loadedCountries = executorService.submit(() -> {
+						System.out.println("Inicio carga textos " + Calendar.getInstance().getTime());
+						countries = mainController.loadCountries();
+						System.out.println("Fin carga textos " + Calendar.getInstance().getTime());
+						return MapUtils.isNotEmpty(countries);
 					});
 
-					executorService.shutdown();
+					if (loadedStadium.get() && loadedCoaches.get() && loadedPlayers.get() && loadedTeams.get()
+							&& loadedCountries.get()) {
+						executorService.shutdown();
+						executorService.awaitTermination(30, TimeUnit.SECONDS);
+						filesLoaded = true;
+					} else {
+						JOptionPane.showMessageDialog(frmEpcf, "No se han podido cargar los archivos", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 
-					executorService.awaitTermination(30, TimeUnit.SECONDS);
-
-				} catch (EpcfException | InterruptedException exception) {
-					JOptionPane.showMessageDialog(frmEpcf, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (EpcfException | InterruptedException | ExecutionException exception) {
+					JOptionPane.showMessageDialog(frmEpcf, exception.getCause().getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
-				System.out.println("Inicio seteo equipo " + Calendar.getInstance().getTime());
-				mainController.setTeams(teams, coaches, stadiums, players);
-				System.out.println("Fin seteo equipo " + Calendar.getInstance().getTime());
+				if (filesLoaded) {
+					System.out.println("Inicio seteo equipo " + Calendar.getInstance().getTime());
+					mainController.setTeams(teams, coaches, stadiums, players);
+					System.out.println("Fin seteo equipo " + Calendar.getInstance().getTime());
 
-				JOptionPane.showMessageDialog(frmEpcf, "Los archivos se han cargado correctamente", "Información",
-						JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frmEpcf, "Los archivos se han cargado correctamente", "Información",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+
 			}
 		});
 		mnFile.add(mntmLoad);
 
 		JMenuItem mntmSave = new JMenuItem("Guardar todo");
 		mntmSave.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -244,6 +255,7 @@ public class Main {
 
 		JMenuItem mntmExit = new JMenuItem("Salir");
 		mntmExit.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -305,5 +317,4 @@ public class Main {
 		});
 		mnuUtils.add(mntmCountries);
 	}
-
 }
