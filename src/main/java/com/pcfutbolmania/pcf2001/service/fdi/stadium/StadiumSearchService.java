@@ -32,6 +32,7 @@ public class StadiumSearchService {
 								: (filter.getTeamId() != null
 										? CollectionUtils.containsAny(stadium.getTeams(), filter.getTeamId())
 										: true)))
+				.sorted((stadium1, stadium2) -> StringUtils.compareIgnoreCase(stadium1.getName(), stadium2.getName()))
 				.collect(Collectors.toList());
 
 		return filteredStadiums;

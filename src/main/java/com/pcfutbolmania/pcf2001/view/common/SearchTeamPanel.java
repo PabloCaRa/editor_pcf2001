@@ -56,7 +56,7 @@ public class SearchTeamPanel extends JPanel {
 
 	private void formWindowOpened() {
 		JScrollPane pnlSearchPlayerTeamResults = new JScrollPane();
-		pnlSearchPlayerTeamResults.setBounds(10, 85, 290, 120);
+		pnlSearchPlayerTeamResults.setBounds(10, 85, 280, 120);
 		pnlSearchPlayerTeamResults.setViewportBorder(null);
 		pnlSearchPlayerTeamResults.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pnlSearchPlayerTeamResults.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -69,7 +69,7 @@ public class SearchTeamPanel extends JPanel {
 		pnlSearchPlayerTeamResults.setViewportView(lstTeams);
 
 		txtSearchPlayerTeam = new JTextField();
-		txtSearchPlayerTeam.setBounds(10, 30, 190, 20);
+		txtSearchPlayerTeam.setBounds(10, 30, 180, 20);
 		txtSearchPlayerTeam.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -81,7 +81,7 @@ public class SearchTeamPanel extends JPanel {
 		txtSearchPlayerTeam.setColumns(10);
 
 		btnSearchTeam = new JButton("Buscar");
-		btnSearchTeam.setBounds(210, 30, 85, 20);
+		btnSearchTeam.setBounds(200, 30, 85, 20);
 		btnSearchTeam.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

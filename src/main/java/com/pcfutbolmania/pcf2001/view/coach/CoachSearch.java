@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +45,12 @@ public class CoachSearch extends JDialog {
 	 * Create the dialog.
 	 */
 	public CoachSearch(Map<Integer, Coach> coaches, Map<Integer, Team> teams) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				formWindowOpened();
+			}
+		});
 
 		teamSearchService = new TeamSearchService();
 		coachSearchService = new CoachSearchService();
@@ -52,13 +60,13 @@ public class CoachSearch extends JDialog {
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);
 		setTitle("Buscar entrenadores");
-		setBounds(400, 400, 645, 340);
+		setBounds(400, 400, 625, 370);
 		getContentPane().setLayout(null);
 
 		JPanel pnlSearchCoachName = new JPanel();
 		pnlSearchCoachName
 				.setBorder(new TitledBorder(null, "Nombre", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchCoachName.setBounds(10, 10, 390, 75);
+		pnlSearchCoachName.setBounds(10, 10, 300, 65);
 		getContentPane().add(pnlSearchCoachName);
 		pnlSearchCoachName.setLayout(null);
 
@@ -71,48 +79,20 @@ public class CoachSearch extends JDialog {
 				}
 			}
 		});
-		txtSearchCoachName.setBounds(20, 30, 355, 20);
+		txtSearchCoachName.setBounds(15, 25, 270, 20);
 		pnlSearchCoachName.add(txtSearchCoachName);
 		txtSearchCoachName.setColumns(10);
-
-		JPanel pnlSearchCoachActions = new JPanel();
-		pnlSearchCoachActions.setLayout(null);
-		pnlSearchCoachActions
-				.setBorder(new TitledBorder(null, "Acciones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchCoachActions.setBounds(400, 10, 230, 75);
-		getContentPane().add(pnlSearchCoachActions);
-
-		JButton btnSearchCoachSearch = new JButton("Buscar");
-		btnSearchCoachSearch.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnSearchCoachSearchActionPerformed();
-			}
-
-		});
-		btnSearchCoachSearch.setBounds(20, 30, 85, 25);
-		pnlSearchCoachActions.add(btnSearchCoachSearch);
-
-		JButton btnSearchCoachBack = new JButton("Volver");
-		btnSearchCoachBack.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnSearchCoachBackActionPerformed();
-			}
-		});
-		btnSearchCoachBack.setBounds(125, 30, 85, 25);
-		pnlSearchCoachActions.add(btnSearchCoachBack);
 
 		JPanel pnlSearchCoachResults = new JPanel();
 		pnlSearchCoachResults
 				.setBorder(new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchCoachResults.setBounds(320, 85, 310, 220);
+		pnlSearchCoachResults.setBounds(310, 10, 300, 285);
 		getContentPane().add(pnlSearchCoachResults);
 		pnlSearchCoachResults.setLayout(null);
 
 		JScrollPane scpSearchCoachResults = new JScrollPane();
 		scpSearchCoachResults.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scpSearchCoachResults.setBounds(10, 15, 290, 195);
+		scpSearchCoachResults.setBounds(10, 15, 280, 260);
 		pnlSearchCoachResults.add(scpSearchCoachResults);
 
 		lstSearchCoachResults = new JList<>();
@@ -121,8 +101,33 @@ public class CoachSearch extends JDialog {
 		lstSearchCoachResults.setCellRenderer(new CoachCellRenderer());
 		scpSearchCoachResults.setViewportView(lstSearchCoachResults);
 
-		pnlSearchTeamPanel = new SearchTeamPanel(10, 85, 310, 220, getContentPane(), teams, teamSearchService);
+		pnlSearchTeamPanel = new SearchTeamPanel(10, 75, 300, 220, getContentPane(), teams, teamSearchService);
 		getContentPane().add(pnlSearchTeamPanel);
+
+		JButton btnSearchCoachSearch = new JButton("Buscar");
+		btnSearchCoachSearch.setBounds(530, 305, 80, 25);
+		getContentPane().add(btnSearchCoachSearch);
+
+		JButton btnSearchCoachBack = new JButton("Volver");
+		btnSearchCoachBack.setBounds(430, 305, 80, 25);
+		getContentPane().add(btnSearchCoachBack);
+		btnSearchCoachBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnSearchCoachBackActionPerformed();
+			}
+		});
+		btnSearchCoachSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnSearchCoachSearchActionPerformed();
+			}
+
+		});
+	}
+
+	private void formWindowOpened() {
+		btnSearchCoachSearchActionPerformed();
 	}
 
 	private void btnSearchCoachBackActionPerformed() {

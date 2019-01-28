@@ -53,7 +53,6 @@ public class PlayerSearch extends JDialog {
 	private Map<Integer, Player> players;
 
 	private JTextField txtShortName;
-	private JTextField txtName;
 
 	private JComboBox<String> cbBirthCountry;
 	private JComboBox<String> cbNationality;
@@ -145,7 +144,7 @@ public class PlayerSearch extends JDialog {
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 980, 800);
+		setBounds(100, 100, 825, 695);
 		getContentPane().setLayout(null);
 		{
 			JPanel pnlSearchPlayerName = new JPanel();
@@ -153,7 +152,7 @@ public class PlayerSearch extends JDialog {
 					.setBorder(new TitledBorder(null, "Nombre", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			getContentPane().add(pnlSearchPlayerName);
 			pnlSearchPlayerName.setLayout(null);
-			pnlSearchPlayerName.setBounds(10, 10, 315, 140);
+			pnlSearchPlayerName.setBounds(10, 10, 200, 65);
 
 			txtShortName = new JTextField();
 			txtShortName.addKeyListener(new KeyAdapter() {
@@ -165,79 +164,55 @@ public class PlayerSearch extends JDialog {
 				}
 			});
 			txtShortName.setToolTipText("Nombre corto");
-			txtShortName.setBounds(10, 45, 295, 20);
+			txtShortName.setBounds(15, 25, 170, 20);
 			pnlSearchPlayerName.add(txtShortName);
 			txtShortName.setColumns(10);
-
-			JLabel lblShortName = new JLabel("Nombre corto");
-			lblShortName.setLabelFor(txtShortName);
-			lblShortName.setBounds(10, 30, 80, 15);
-			pnlSearchPlayerName.add(lblShortName);
-
-			txtName = new JTextField();
-			txtName.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyPressed(KeyEvent e) {
-					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-						btnSearchActionPerformed();
-					}
-				}
-			});
-			txtName.setToolTipText("Nombre largo");
-			txtName.setColumns(10);
-			txtName.setBounds(10, 90, 295, 20);
-			pnlSearchPlayerName.add(txtName);
-
-			JLabel lblName = new JLabel("Nombre largo");
-			lblName.setLabelFor(txtName);
-			lblName.setBounds(10, 75, 80, 15);
-			pnlSearchPlayerName.add(lblName);
 		}
 
 		JPanel pnlSearchPlayerBirthYear = new JPanel();
-		pnlSearchPlayerBirthYear.setBorder(
-				new TitledBorder(null, "A\u00F1o de nacimiento", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchPlayerBirthYear.setBounds(810, 10, 155, 140);
+		pnlSearchPlayerBirthYear.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Nacimiento",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlSearchPlayerBirthYear.setBounds(10, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerBirthYear);
 		pnlSearchPlayerBirthYear.setLayout(null);
 
 		spnBirthYearMin = new JSpinner();
-		spnBirthYearMin.setBounds(50, 45, 55, 20);
+		spnBirthYearMin.setBounds(25, 35, 50, 20);
 		spnBirthYearMin.setModel(new SpinnerNumberModel(1800, 0, 9999, 1));
 		pnlSearchPlayerBirthYear.add(spnBirthYearMin);
 
 		JLabel lblBirthYearMin = new JLabel("Mínimo");
 		lblBirthYearMin.setLabelFor(spnBirthYearMin);
-		lblBirthYearMin.setBounds(50, 30, 45, 15);
+		lblBirthYearMin.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerBirthYear.add(lblBirthYearMin);
 
 		spnBirthYearMax = new JSpinner();
 		spnBirthYearMax.setModel(new SpinnerNumberModel(2100, 0, 9999, 1));
-		spnBirthYearMax.setBounds(50, 90, 55, 20);
+		spnBirthYearMax.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerBirthYear.add(spnBirthYearMax);
 
 		JLabel lblBirthYearMax = new JLabel("Máximo");
-		lblBirthYearMax.setBounds(50, 75, 45, 15);
+		lblBirthYearMax.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerBirthYear.add(lblBirthYearMax);
 
 		JPanel pnlSearchPlayerDemarcation = new JPanel();
 		pnlSearchPlayerDemarcation.setBorder(
 				new TitledBorder(null, "Demarcaci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchPlayerDemarcation.setBounds(570, 80, 235, 70);
+		pnlSearchPlayerDemarcation.setBounds(410, 75, 200, 65);
 		getContentPane().add(pnlSearchPlayerDemarcation);
 		pnlSearchPlayerDemarcation.setLayout(null);
 
 		cbDemarcation = new JComboBox<>();
 		cbDemarcation.setModel(
 				new DefaultComboBoxModel<>(new String[] { "", "Portero", "Defensa", "Centrocampista", "Delantero" }));
-		cbDemarcation.setBounds(10, 30, 215, 20);
+		cbDemarcation.setBounds(15, 25, 170, 20);
 		pnlSearchPlayerDemarcation.add(cbDemarcation);
 
 		JPanel pnlSearchPlayerPosition = new JPanel();
 		pnlSearchPlayerPosition.setLayout(null);
 		pnlSearchPlayerPosition.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Posici\u00F3n",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerPosition.setBounds(570, 10, 235, 70);
+		pnlSearchPlayerPosition.setBounds(410, 10, 200, 65);
 		getContentPane().add(pnlSearchPlayerPosition);
 
 		cbPosition = new JComboBox<>();
@@ -246,528 +221,501 @@ public class PlayerSearch extends JDialog {
 				"Interior derecho", "Delantero centro", "Centrocampista izquierdo", "Extremo derecho",
 				"Media punta central", "Extremo izquierdo", "Centrocampista defensivo", "Media punta derecho",
 				"Media punta izquierdo", "Interior izquierdo" }));
-		cbPosition.setBounds(10, 30, 215, 20);
+		cbPosition.setBounds(15, 25, 170, 20);
 		pnlSearchPlayerPosition.add(cbPosition);
 
 		JPanel pnlSearchPlayerBirthCountry = new JPanel();
 		pnlSearchPlayerBirthCountry.setLayout(null);
 		pnlSearchPlayerBirthCountry.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Pa\u00EDs natal", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerBirthCountry.setBounds(330, 10, 235, 70);
+		pnlSearchPlayerBirthCountry.setBounds(210, 10, 200, 65);
 		getContentPane().add(pnlSearchPlayerBirthCountry);
 
 		cbBirthCountry = new JComboBox<>();
-		cbBirthCountry.setBounds(10, 30, 215, 20);
+		cbBirthCountry.setBounds(15, 25, 170, 20);
 		pnlSearchPlayerBirthCountry.add(cbBirthCountry);
 
 		JPanel pnlSearchPlayerNationality = new JPanel();
 		pnlSearchPlayerNationality.setLayout(null);
 		pnlSearchPlayerNationality.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Nacionalidad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerNationality.setBounds(330, 80, 235, 70);
+		pnlSearchPlayerNationality.setBounds(210, 75, 200, 65);
 		getContentPane().add(pnlSearchPlayerNationality);
 
 		cbNationality = new JComboBox<>();
-		cbNationality.setBounds(10, 30, 215, 20);
+		cbNationality.setBounds(15, 25, 170, 20);
 		pnlSearchPlayerNationality.add(cbNationality);
 
 		JPanel pnlSearchPlayerHeight = new JPanel();
 		pnlSearchPlayerHeight.setLayout(null);
 		pnlSearchPlayerHeight.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Altura",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerHeight.setBounds(10, 150, 155, 130);
+		pnlSearchPlayerHeight.setBounds(610, 10, 100, 130);
 		getContentPane().add(pnlSearchPlayerHeight);
 
 		spnMinHeight = new JSpinner();
 		spnMinHeight.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinHeight.setBounds(55, 35, 45, 20);
+		spnMinHeight.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerHeight.add(spnMinHeight);
 
 		spnMaxHeight = new JSpinner();
 		spnMaxHeight.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxHeight.setBounds(55, 90, 45, 20);
+		spnMaxHeight.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerHeight.add(spnMaxHeight);
 
 		JLabel lblMinHeight = new JLabel("Mínimo");
 		lblMinHeight.setLabelFor(spnMinHeight);
-		lblMinHeight.setBounds(55, 20, 45, 15);
+		lblMinHeight.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerHeight.add(lblMinHeight);
 
 		JLabel lblMaxHeight = new JLabel("Máximo");
 		lblMaxHeight.setLabelFor(lblMaxHeight);
-		lblMaxHeight.setBounds(55, 75, 45, 15);
+		lblMaxHeight.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerHeight.add(lblMaxHeight);
 
 		JPanel pnlSearchPlayerWeight = new JPanel();
 		pnlSearchPlayerWeight.setLayout(null);
 		pnlSearchPlayerWeight.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Peso",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerWeight.setBounds(170, 150, 155, 130);
+		pnlSearchPlayerWeight.setBounds(710, 10, 100, 130);
 		getContentPane().add(pnlSearchPlayerWeight);
 
 		spnMinWeight = new JSpinner();
 		spnMinWeight.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinWeight.setBounds(55, 35, 45, 20);
+		spnMinWeight.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerWeight.add(spnMinWeight);
 
 		spnMaxWeight = new JSpinner();
 		spnMaxWeight.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxWeight.setBounds(55, 90, 45, 20);
+		spnMaxWeight.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerWeight.add(spnMaxWeight);
 
 		JLabel lblMinWeight = new JLabel("Mínimo");
 		lblMinWeight.setLabelFor(spnMinWeight);
-		lblMinWeight.setBounds(55, 20, 45, 15);
+		lblMinWeight.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerWeight.add(lblMinWeight);
 
 		JLabel lblMaxWeight = new JLabel("Máximo");
 		lblMaxWeight.setLabelFor(spnMaxWeight);
-		lblMaxWeight.setBounds(55, 75, 45, 15);
+		lblMaxWeight.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerWeight.add(lblMaxWeight);
 
 		JPanel pnlSearchPlayerFoot = new JPanel();
 		pnlSearchPlayerFoot.setLayout(null);
 		pnlSearchPlayerFoot.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pie",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerFoot.setBounds(330, 150, 155, 130);
+		pnlSearchPlayerFoot.setBounds(10, 75, 200, 65);
 		getContentPane().add(pnlSearchPlayerFoot);
 
 		cbFoot = new JComboBox<>();
 		cbFoot.setModel(new DefaultComboBoxModel<>(new String[] { "", "Diestro", "Zurdo", "Ambidiestro" }));
-		cbFoot.setBounds(10, 55, 135, 20);
+		cbFoot.setBounds(15, 25, 170, 20);
 		pnlSearchPlayerFoot.add(cbFoot);
 
 		JPanel pnlSearchPlayerSpeed = new JPanel();
 		pnlSearchPlayerSpeed.setLayout(null);
 		pnlSearchPlayerSpeed.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Velocidad",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerSpeed.setBounds(490, 150, 155, 130);
+		pnlSearchPlayerSpeed.setBounds(110, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerSpeed);
 
 		spnMinSpeed = new JSpinner();
 		spnMinSpeed.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinSpeed.setBounds(55, 35, 45, 20);
+		spnMinSpeed.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerSpeed.add(spnMinSpeed);
 
 		spnMaxSpeed = new JSpinner();
 		spnMaxSpeed.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxSpeed.setBounds(55, 90, 45, 20);
+		spnMaxSpeed.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerSpeed.add(spnMaxSpeed);
 
 		JLabel lblMinSpeed = new JLabel("Mínimo");
 		lblMinSpeed.setLabelFor(spnMinSpeed);
-		lblMinSpeed.setBounds(55, 20, 45, 15);
+		lblMinSpeed.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerSpeed.add(lblMinSpeed);
 
 		JLabel lblMaxSpeed = new JLabel("Máximo");
 		lblMaxSpeed.setLabelFor(lblMaxSpeed);
-		lblMaxSpeed.setBounds(55, 75, 45, 15);
+		lblMaxSpeed.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerSpeed.add(lblMaxSpeed);
 
 		JPanel pnlSearchPlayerStamina = new JPanel();
 		pnlSearchPlayerStamina.setLayout(null);
 		pnlSearchPlayerStamina.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Resistencia",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerStamina.setBounds(650, 150, 155, 130);
+		pnlSearchPlayerStamina.setBounds(210, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerStamina);
 
 		spnMinStamina = new JSpinner();
 		spnMinStamina.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinStamina.setBounds(55, 35, 45, 20);
+		spnMinStamina.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerStamina.add(spnMinStamina);
 
 		spnMaxStamina = new JSpinner();
 		spnMaxStamina.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxStamina.setBounds(55, 90, 45, 20);
+		spnMaxStamina.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerStamina.add(spnMaxStamina);
 
 		JLabel lblMinStamina = new JLabel("Mínimo");
 		lblMinStamina.setLabelFor(spnMinStamina);
-		lblMinStamina.setBounds(55, 20, 45, 15);
+		lblMinStamina.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerStamina.add(lblMinStamina);
 
 		JLabel lblMaxStamina = new JLabel("Máximo");
 		lblMaxStamina.setLabelFor(spnMaxStamina);
-		lblMaxStamina.setBounds(55, 75, 45, 15);
+		lblMaxStamina.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerStamina.add(lblMaxStamina);
 
 		JPanel pnlSearchPlayerAggressiveness = new JPanel();
 		pnlSearchPlayerAggressiveness.setLayout(null);
 		pnlSearchPlayerAggressiveness.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Agresividad", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerAggressiveness.setBounds(810, 150, 155, 130);
+		pnlSearchPlayerAggressiveness.setBounds(310, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerAggressiveness);
 
 		spnMinAggressiveness = new JSpinner();
 		spnMinAggressiveness.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinAggressiveness.setBounds(55, 35, 45, 20);
+		spnMinAggressiveness.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerAggressiveness.add(spnMinAggressiveness);
 
 		spnMaxAggressiveness = new JSpinner();
 		spnMaxAggressiveness.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxAggressiveness.setBounds(55, 90, 45, 20);
+		spnMaxAggressiveness.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerAggressiveness.add(spnMaxAggressiveness);
 
 		JLabel lblMinAggressiveness = new JLabel("Mínimo");
 		lblMinAggressiveness.setLabelFor(spnMinAggressiveness);
-		lblMinAggressiveness.setBounds(55, 20, 45, 15);
+		lblMinAggressiveness.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerAggressiveness.add(lblMinAggressiveness);
 
 		JLabel lblMaxAggressiveness = new JLabel("Máximo");
 		lblMaxAggressiveness.setLabelFor(spnMaxAggressiveness);
-		lblMaxAggressiveness.setBounds(55, 75, 45, 15);
+		lblMaxAggressiveness.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerAggressiveness.add(lblMaxAggressiveness);
 
 		JPanel pnlSearchPlayerQuality = new JPanel();
 		pnlSearchPlayerQuality.setLayout(null);
 		pnlSearchPlayerQuality.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Calidad",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerQuality.setBounds(10, 280, 155, 130);
+		pnlSearchPlayerQuality.setBounds(410, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerQuality);
 
 		spnMinQuality = new JSpinner();
 		spnMinQuality.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinQuality.setBounds(55, 35, 45, 20);
+		spnMinQuality.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerQuality.add(spnMinQuality);
 
 		spnMaxQuality = new JSpinner();
 		spnMaxQuality.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxQuality.setBounds(55, 90, 45, 20);
+		spnMaxQuality.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerQuality.add(spnMaxQuality);
 
 		JLabel lblMinQuality = new JLabel("Mínimo");
 		lblMinQuality.setLabelFor(spnMinQuality);
-		lblMinQuality.setBounds(55, 20, 45, 15);
+		lblMinQuality.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerQuality.add(lblMinQuality);
 
 		JLabel lblMaxQuality = new JLabel("Máximo");
 		lblMaxQuality.setLabelFor(spnMaxQuality);
-		lblMaxQuality.setBounds(55, 75, 45, 15);
+		lblMaxQuality.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerQuality.add(lblMaxQuality);
 
 		JPanel pnlSearchPlayerGoalkeeper = new JPanel();
 		pnlSearchPlayerGoalkeeper.setLayout(null);
 		pnlSearchPlayerGoalkeeper.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Portero",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerGoalkeeper.setBounds(170, 280, 155, 130);
+		pnlSearchPlayerGoalkeeper.setBounds(510, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerGoalkeeper);
 
 		spnMinGoalkeeper = new JSpinner();
 		spnMinGoalkeeper.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinGoalkeeper.setBounds(55, 35, 45, 20);
+		spnMinGoalkeeper.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerGoalkeeper.add(spnMinGoalkeeper);
 
 		spnMaxGoalkeeper = new JSpinner();
 		spnMaxGoalkeeper.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxGoalkeeper.setBounds(55, 90, 45, 20);
+		spnMaxGoalkeeper.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerGoalkeeper.add(spnMaxGoalkeeper);
 
 		JLabel lblMinGoalkeeper = new JLabel("Mínimo");
 		lblMinGoalkeeper.setLabelFor(spnMinGoalkeeper);
-		lblMinGoalkeeper.setBounds(55, 20, 45, 15);
+		lblMinGoalkeeper.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerGoalkeeper.add(lblMinGoalkeeper);
 
 		JLabel lblMaxGoalkeeper = new JLabel("Máximo");
 		lblMaxGoalkeeper.setLabelFor(spnMaxGoalkeeper);
-		lblMaxGoalkeeper.setBounds(55, 75, 45, 15);
+		lblMaxGoalkeeper.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerGoalkeeper.add(lblMaxGoalkeeper);
 
 		JPanel pnlSearchPlayerTackling = new JPanel();
 		pnlSearchPlayerTackling.setLayout(null);
 		pnlSearchPlayerTackling.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Entradas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerTackling.setBounds(330, 280, 155, 130);
+		pnlSearchPlayerTackling.setBounds(610, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerTackling);
 
 		spnMinTackling = new JSpinner();
 		spnMinTackling.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinTackling.setBounds(55, 35, 45, 20);
+		spnMinTackling.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerTackling.add(spnMinTackling);
 
 		spnMaxTackling = new JSpinner();
 		spnMaxTackling.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxTackling.setBounds(55, 90, 45, 20);
+		spnMaxTackling.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerTackling.add(spnMaxTackling);
 
 		JLabel lblMinTackling = new JLabel("Mínimo");
 		lblMinTackling.setLabelFor(spnMinTackling);
-		lblMinTackling.setBounds(55, 20, 45, 15);
+		lblMinTackling.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerTackling.add(lblMinTackling);
 
 		JLabel lblMaxTackling = new JLabel("Máximo");
 		lblMaxTackling.setLabelFor(spnMaxTackling);
-		lblMaxTackling.setBounds(55, 75, 45, 15);
+		lblMaxTackling.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerTackling.add(lblMaxTackling);
 
 		JPanel pnlSearchPlayerPass = new JPanel();
 		pnlSearchPlayerPass.setLayout(null);
 		pnlSearchPlayerPass.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pase",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerPass.setBounds(490, 280, 155, 130);
+		pnlSearchPlayerPass.setBounds(710, 140, 100, 130);
 		getContentPane().add(pnlSearchPlayerPass);
 
 		spnMinPass = new JSpinner();
 		spnMinPass.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinPass.setBounds(55, 35, 45, 20);
+		spnMinPass.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerPass.add(spnMinPass);
 
 		spnMaxPass = new JSpinner();
 		spnMaxPass.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxPass.setBounds(55, 90, 45, 20);
+		spnMaxPass.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerPass.add(spnMaxPass);
 
 		JLabel lblMinPass = new JLabel("Mínimo");
 		lblMinPass.setLabelFor(spnMinPass);
-		lblMinPass.setBounds(55, 20, 45, 15);
+		lblMinPass.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerPass.add(lblMinPass);
 
 		JLabel lblMaxPass = new JLabel("Máximo");
 		lblMaxPass.setLabelFor(spnMaxPass);
-		lblMaxPass.setBounds(55, 75, 45, 15);
+		lblMaxPass.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerPass.add(lblMaxPass);
 
 		JPanel pnlSearchPlayerDribbling = new JPanel();
 		pnlSearchPlayerDribbling.setLayout(null);
 		pnlSearchPlayerDribbling.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Regate",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerDribbling.setBounds(650, 280, 155, 130);
+		pnlSearchPlayerDribbling.setBounds(10, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerDribbling);
 
 		spnMinDribbling = new JSpinner();
 		spnMinDribbling.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinDribbling.setBounds(55, 35, 45, 20);
+		spnMinDribbling.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerDribbling.add(spnMinDribbling);
 
 		spnMaxDribbling = new JSpinner();
 		spnMaxDribbling.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxDribbling.setBounds(55, 90, 45, 20);
+		spnMaxDribbling.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerDribbling.add(spnMaxDribbling);
 
 		JLabel lblMinDribbling = new JLabel("Mínimo");
 		lblMinDribbling.setLabelFor(spnMinDribbling);
-		lblMinDribbling.setBounds(55, 20, 45, 15);
+		lblMinDribbling.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerDribbling.add(lblMinDribbling);
 
 		JLabel lblMaxDribbling = new JLabel("Máximo");
 		lblMaxDribbling.setLabelFor(spnMaxDribbling);
-		lblMaxDribbling.setBounds(55, 75, 45, 15);
+		lblMaxDribbling.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerDribbling.add(lblMaxDribbling);
 
 		JPanel pnlSearchPlayerShot = new JPanel();
 		pnlSearchPlayerShot.setLayout(null);
 		pnlSearchPlayerShot.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tiro",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerShot.setBounds(810, 280, 155, 130);
+		pnlSearchPlayerShot.setBounds(110, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerShot);
 
 		spnMinShot = new JSpinner();
 		spnMinShot.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinShot.setBounds(55, 35, 45, 20);
+		spnMinShot.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerShot.add(spnMinShot);
 
 		spnMaxShot = new JSpinner();
 		spnMaxShot.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxShot.setBounds(55, 90, 45, 20);
+		spnMaxShot.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerShot.add(spnMaxShot);
 
 		JLabel lblMinShot = new JLabel("Mínimo");
 		lblMinShot.setLabelFor(spnMinShot);
-		lblMinShot.setBounds(55, 20, 45, 15);
+		lblMinShot.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerShot.add(lblMinShot);
 
 		JLabel lblMaxShot = new JLabel("Máximo");
 		lblMaxShot.setLabelFor(spnMaxShot);
-		lblMaxShot.setBounds(55, 75, 45, 15);
+		lblMaxShot.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerShot.add(lblMaxShot);
 
 		JPanel pnlSearchPlayerHeadshot = new JPanel();
 		pnlSearchPlayerHeadshot.setLayout(null);
 		pnlSearchPlayerHeadshot.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Remate",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerHeadshot.setBounds(10, 410, 155, 130);
+		pnlSearchPlayerHeadshot.setBounds(210, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerHeadshot);
 
 		spnMinHeadshot = new JSpinner();
 		spnMinHeadshot.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinHeadshot.setBounds(55, 35, 45, 20);
+		spnMinHeadshot.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerHeadshot.add(spnMinHeadshot);
 
 		spnMaxHeadshot = new JSpinner();
 		spnMaxHeadshot.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxHeadshot.setBounds(55, 90, 45, 20);
+		spnMaxHeadshot.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerHeadshot.add(spnMaxHeadshot);
 
 		JLabel lblMinHeadshot = new JLabel("Mínimo");
 		lblMinHeadshot.setLabelFor(spnMinHeadshot);
-		lblMinHeadshot.setBounds(55, 20, 45, 15);
+		lblMinHeadshot.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerHeadshot.add(lblMinHeadshot);
 
 		JLabel lblMaxHeadshot = new JLabel("Máximo");
 		lblMaxHeadshot.setLabelFor(spnMaxHeadshot);
-		lblMaxHeadshot.setBounds(55, 75, 45, 15);
+		lblMaxHeadshot.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerHeadshot.add(lblMaxHeadshot);
 
 		JPanel pnlSearchPlayerPenalty = new JPanel();
 		pnlSearchPlayerPenalty.setLayout(null);
 		pnlSearchPlayerPenalty.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Penalti",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerPenalty.setBounds(170, 410, 155, 130);
+		pnlSearchPlayerPenalty.setBounds(310, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerPenalty);
 
 		spnMinPenalty = new JSpinner();
 		spnMinPenalty.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinPenalty.setBounds(55, 35, 45, 20);
+		spnMinPenalty.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerPenalty.add(spnMinPenalty);
 
 		spnMaxPenalty = new JSpinner();
 		spnMaxPenalty.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxPenalty.setBounds(55, 90, 45, 20);
+		spnMaxPenalty.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerPenalty.add(spnMaxPenalty);
 
 		JLabel lblMinPenalty = new JLabel("Mínimo");
 		lblMinPenalty.setLabelFor(spnMinPenalty);
-		lblMinPenalty.setBounds(55, 20, 45, 15);
+		lblMinPenalty.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerPenalty.add(lblMinPenalty);
 
 		JLabel lblMaxPenalty = new JLabel("Máximo");
 		lblMaxPenalty.setLabelFor(spnMaxPenalty);
-		lblMaxPenalty.setBounds(55, 75, 45, 15);
+		lblMaxPenalty.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerPenalty.add(lblMaxPenalty);
 
 		JPanel pnlSearchPlayerLeftCorner = new JPanel();
 		pnlSearchPlayerLeftCorner.setLayout(null);
 		pnlSearchPlayerLeftCorner.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Córner izquierdo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerLeftCorner.setBounds(330, 410, 155, 130);
+		pnlSearchPlayerLeftCorner.setBounds(410, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerLeftCorner);
 
 		spnMinLeftCorner = new JSpinner();
 		spnMinLeftCorner.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinLeftCorner.setBounds(55, 35, 45, 20);
+		spnMinLeftCorner.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerLeftCorner.add(spnMinLeftCorner);
 
 		spnMaxLeftCorner = new JSpinner();
 		spnMaxLeftCorner.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxLeftCorner.setBounds(55, 90, 45, 20);
+		spnMaxLeftCorner.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerLeftCorner.add(spnMaxLeftCorner);
 
 		JLabel lblMinLeftCorner = new JLabel("Mínimo");
 		lblMinLeftCorner.setLabelFor(spnMinLeftCorner);
-		lblMinLeftCorner.setBounds(55, 20, 45, 15);
+		lblMinLeftCorner.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerLeftCorner.add(lblMinLeftCorner);
 
 		JLabel lblMaxLeftCorner = new JLabel("Máximo");
 		lblMaxLeftCorner.setLabelFor(spnMaxLeftCorner);
-		lblMaxLeftCorner.setBounds(55, 75, 45, 15);
+		lblMaxLeftCorner.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerLeftCorner.add(lblMaxLeftCorner);
 
 		JPanel pnlSearchPlayerRightCorner = new JPanel();
 		pnlSearchPlayerRightCorner.setLayout(null);
 		pnlSearchPlayerRightCorner.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Córner derecho", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerRightCorner.setBounds(490, 410, 155, 130);
+		pnlSearchPlayerRightCorner.setBounds(510, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerRightCorner);
 
 		spnMinRightCorner = new JSpinner();
 		spnMinRightCorner.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinRightCorner.setBounds(55, 35, 45, 20);
+		spnMinRightCorner.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerRightCorner.add(spnMinRightCorner);
 
 		spnMaxRightCorner = new JSpinner();
 		spnMaxRightCorner.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxRightCorner.setBounds(55, 90, 45, 20);
+		spnMaxRightCorner.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerRightCorner.add(spnMaxRightCorner);
 
 		JLabel lblMinRightCorner = new JLabel("Mínimo");
 		lblMinRightCorner.setLabelFor(spnMinRightCorner);
-		lblMinRightCorner.setBounds(55, 20, 45, 15);
+		lblMinRightCorner.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerRightCorner.add(lblMinRightCorner);
 
 		JLabel lblMaxRightCorner = new JLabel("Máximo");
 		lblMaxRightCorner.setLabelFor(spnMaxRightCorner);
-		lblMaxRightCorner.setBounds(55, 75, 45, 15);
+		lblMaxRightCorner.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerRightCorner.add(lblMaxRightCorner);
 
 		JPanel pnlSearchPlayerLeftFreeKick = new JPanel();
 		pnlSearchPlayerLeftFreeKick.setLayout(null);
 		pnlSearchPlayerLeftFreeKick.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Falta izquierda", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerLeftFreeKick.setBounds(650, 410, 155, 130);
+		pnlSearchPlayerLeftFreeKick.setBounds(610, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerLeftFreeKick);
 
 		spnMinLeftFreeKick = new JSpinner();
 		spnMinLeftFreeKick.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinLeftFreeKick.setBounds(55, 35, 45, 20);
+		spnMinLeftFreeKick.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerLeftFreeKick.add(spnMinLeftFreeKick);
 
 		spnMaxLeftFreeKick = new JSpinner();
 		spnMaxLeftFreeKick.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxLeftFreeKick.setBounds(55, 90, 45, 20);
+		spnMaxLeftFreeKick.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerLeftFreeKick.add(spnMaxLeftFreeKick);
 
 		JLabel lblMinLeftFreeKick = new JLabel("Mínimo");
 		lblMinLeftFreeKick.setLabelFor(spnMinLeftFreeKick);
-		lblMinLeftFreeKick.setBounds(55, 20, 45, 15);
+		lblMinLeftFreeKick.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerLeftFreeKick.add(lblMinLeftFreeKick);
 
 		JLabel lblMaxLeftFreeKick = new JLabel("Máximo");
 		lblMaxLeftFreeKick.setLabelFor(spnMaxLeftFreeKick);
-		lblMaxLeftFreeKick.setBounds(55, 75, 45, 15);
+		lblMaxLeftFreeKick.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerLeftFreeKick.add(lblMaxLeftFreeKick);
 
 		JPanel pnlSearchPlayerRightFreeKick = new JPanel();
 		pnlSearchPlayerRightFreeKick.setLayout(null);
 		pnlSearchPlayerRightFreeKick.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Falta derecha", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchPlayerRightFreeKick.setBounds(810, 410, 155, 130);
+		pnlSearchPlayerRightFreeKick.setBounds(710, 270, 100, 130);
 		getContentPane().add(pnlSearchPlayerRightFreeKick);
 
 		spnMinRightFreeKick = new JSpinner();
 		spnMinRightFreeKick.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnMinRightFreeKick.setBounds(55, 35, 45, 20);
+		spnMinRightFreeKick.setBounds(25, 35, 50, 20);
 		pnlSearchPlayerRightFreeKick.add(spnMinRightFreeKick);
 
 		spnMaxRightFreeKick = new JSpinner();
 		spnMaxRightFreeKick.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnMaxRightFreeKick.setBounds(55, 90, 45, 20);
+		spnMaxRightFreeKick.setBounds(25, 90, 50, 20);
 		pnlSearchPlayerRightFreeKick.add(spnMaxRightFreeKick);
 
 		JLabel lblMinRightFreeKick = new JLabel("Mínimo");
 		lblMinRightFreeKick.setLabelFor(spnMinRightFreeKick);
-		lblMinRightFreeKick.setBounds(55, 20, 45, 15);
+		lblMinRightFreeKick.setBounds(25, 20, 50, 15);
 		pnlSearchPlayerRightFreeKick.add(lblMinRightFreeKick);
 
 		JLabel lblMaxRightFreeKick = new JLabel("Máximo");
 		lblMaxRightFreeKick.setLabelFor(spnMaxRightFreeKick);
-		lblMaxRightFreeKick.setBounds(55, 75, 45, 15);
+		lblMaxRightFreeKick.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerRightFreeKick.add(lblMaxRightFreeKick);
-
-		JPanel pnlSearchPlayerActions = new JPanel();
-		pnlSearchPlayerActions
-				.setBorder(new TitledBorder(null, "Acciones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchPlayerActions.setBounds(810, 540, 155, 220);
-		getContentPane().add(pnlSearchPlayerActions);
-		pnlSearchPlayerActions.setLayout(null);
-
-		JButton btnSearch = new JButton("Buscar");
-		btnSearch.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnSearchActionPerformed();
-			}
-		});
-		btnSearch.setBounds(35, 65, 85, 25);
-		pnlSearchPlayerActions.add(btnSearch);
-
-		JButton btnBack = new JButton("Volver");
-		btnBack.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnBackActionPerformed();
-			}
-		});
-		btnBack.setBounds(35, 135, 85, 25);
-		pnlSearchPlayerActions.add(btnBack);
 
 		JScrollPane pnlSearchPlayerResults = new JScrollPane();
 		pnlSearchPlayerResults.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -775,7 +723,7 @@ public class PlayerSearch extends JDialog {
 		pnlSearchPlayerResults.setBorder(null);
 		pnlSearchPlayerResults.setViewportBorder(
 				new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchPlayerResults.setBounds(330, 540, 475, 220);
+		pnlSearchPlayerResults.setBounds(310, 400, 500, 220);
 		getContentPane().add(pnlSearchPlayerResults);
 
 		lstResults = new JList<>();
@@ -784,8 +732,28 @@ public class PlayerSearch extends JDialog {
 		lstResults.setCellRenderer(new PlayerCellRenderer());
 		pnlSearchPlayerResults.setViewportView(lstResults);
 
-		pnlSearchTeamPanel = new SearchTeamPanel(10, 540, 310, 220, getContentPane(), teams, teamSearchService);
+		pnlSearchTeamPanel = new SearchTeamPanel(10, 400, 300, 220, getContentPane(), teams, teamSearchService);
 		getContentPane().add(pnlSearchTeamPanel);
+
+		JButton btnSearch = new JButton("Buscar");
+		btnSearch.setBounds(730, 630, 80, 25);
+		getContentPane().add(btnSearch);
+
+		JButton btnBack = new JButton("Volver");
+		btnBack.setBounds(630, 630, 80, 25);
+		getContentPane().add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnBackActionPerformed();
+			}
+		});
+		btnSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnSearchActionPerformed();
+			}
+		});
 
 	}
 
@@ -805,8 +773,7 @@ public class PlayerSearch extends JDialog {
 
 	private void btnSearchActionPerformed() {
 		PlayerFilter toSearch = new PlayerFilter();
-		toSearch.setName(txtName.getText());
-		toSearch.setShortName(txtShortName.getText());
+		toSearch.setName(txtShortName.getText());
 
 		if (cbBirthCountry.getSelectedIndex() > 0) {
 			toSearch.setBirthCountry(cbBirthCountry.getSelectedIndex() - 1);

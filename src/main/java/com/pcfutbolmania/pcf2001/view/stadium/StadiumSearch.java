@@ -98,13 +98,13 @@ public class StadiumSearch extends JDialog {
 
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-		setBounds(400, 400, 645, 530);
+		setBounds(400, 400, 725, 435);
 		getContentPane().setLayout(null);
 
 		JPanel pnlSearchStadiumName = new JPanel();
 		pnlSearchStadiumName
 				.setBorder(new TitledBorder(null, "Nombre", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchStadiumName.setBounds(10, 10, 310, 65);
+		pnlSearchStadiumName.setBounds(10, 10, 200, 65);
 		getContentPane().add(pnlSearchStadiumName);
 		pnlSearchStadiumName.setLayout(null);
 
@@ -117,7 +117,7 @@ public class StadiumSearch extends JDialog {
 				}
 			}
 		});
-		txtSearchStadiumName.setBounds(15, 25, 280, 20);
+		txtSearchStadiumName.setBounds(15, 25, 170, 20);
 		pnlSearchStadiumName.add(txtSearchStadiumName);
 		txtSearchStadiumName.setColumns(10);
 
@@ -125,194 +125,187 @@ public class StadiumSearch extends JDialog {
 		pnlSearchStadiumCountry.setLayout(null);
 		pnlSearchStadiumCountry.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pa\u00EDs",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchStadiumCountry.setBounds(10, 75, 310, 65);
+		pnlSearchStadiumCountry.setBounds(10, 75, 200, 65);
 		getContentPane().add(pnlSearchStadiumCountry);
 
 		cbCountries = new JComboBox<>();
-		cbCountries.setBounds(15, 25, 280, 20);
+		cbCountries.setBounds(15, 25, 170, 20);
 		pnlSearchStadiumCountry.add(cbCountries);
 
 		JPanel pnlSearchStadiumWidth = new JPanel();
 		pnlSearchStadiumWidth.setLayout(null);
 		pnlSearchStadiumWidth.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Ancho",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchStadiumWidth.setBounds(10, 140, 155, 130);
+		pnlSearchStadiumWidth.setBounds(410, 10, 100, 130);
 		getContentPane().add(pnlSearchStadiumWidth);
 
 		spnSearchStadiumWidthMin = new JSpinner();
 		spnSearchStadiumWidthMin.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnSearchStadiumWidthMin.setBounds(55, 35, 45, 20);
+		spnSearchStadiumWidthMin.setBounds(25, 35, 50, 20);
 		pnlSearchStadiumWidth.add(spnSearchStadiumWidthMin);
 
 		spnSearchStadiumWidthMax = new JSpinner();
 		spnSearchStadiumWidthMax.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnSearchStadiumWidthMax.setBounds(55, 90, 45, 20);
+		spnSearchStadiumWidthMax.setBounds(25, 90, 50, 20);
 		pnlSearchStadiumWidth.add(spnSearchStadiumWidthMax);
 
 		JLabel lblSearchStadiumWidtthMin = new JLabel("Mínimo");
 		lblSearchStadiumWidtthMin.setLabelFor(spnSearchStadiumWidthMin);
-		lblSearchStadiumWidtthMin.setBounds(55, 20, 45, 15);
+		lblSearchStadiumWidtthMin.setBounds(25, 20, 50, 15);
 		pnlSearchStadiumWidth.add(lblSearchStadiumWidtthMin);
 
 		JLabel lblSearchStadiumWidtthMax = new JLabel("Máximo");
 		lblSearchStadiumWidtthMax.setLabelFor(lblSearchStadiumWidtthMax);
-		lblSearchStadiumWidtthMax.setBounds(55, 75, 45, 15);
+		lblSearchStadiumWidtthMax.setBounds(25, 75, 50, 15);
 		pnlSearchStadiumWidth.add(lblSearchStadiumWidtthMax);
 
 		JPanel pnlSearchStadiumLength = new JPanel();
 		pnlSearchStadiumLength.setLayout(null);
 		pnlSearchStadiumLength.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Largo",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchStadiumLength.setBounds(475, 10, 155, 130);
+		pnlSearchStadiumLength.setBounds(310, 10, 100, 130);
 		getContentPane().add(pnlSearchStadiumLength);
 
 		spnSearchStadiumLengthMin = new JSpinner();
 		spnSearchStadiumLengthMin.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnSearchStadiumLengthMin.setBounds(55, 35, 45, 20);
+		spnSearchStadiumLengthMin.setBounds(25, 35, 50, 20);
 		pnlSearchStadiumLength.add(spnSearchStadiumLengthMin);
 
 		spnSearchStadiumLengthMax = new JSpinner();
 		spnSearchStadiumLengthMax.setModel(new SpinnerNumberModel(255, 0, 255, 1));
-		spnSearchStadiumLengthMax.setBounds(55, 90, 45, 20);
+		spnSearchStadiumLengthMax.setBounds(25, 90, 50, 20);
 		pnlSearchStadiumLength.add(spnSearchStadiumLengthMax);
 
 		JLabel lblSearchStadiumLengthMin = new JLabel("Mínimo");
 		lblSearchStadiumLengthMin.setLabelFor(spnSearchStadiumLengthMin);
-		lblSearchStadiumLengthMin.setBounds(55, 20, 45, 15);
+		lblSearchStadiumLengthMin.setBounds(25, 20, 50, 15);
 		pnlSearchStadiumLength.add(lblSearchStadiumLengthMin);
 
 		JLabel lblSearchStadiumLengthMax = new JLabel("Máximo");
 		lblSearchStadiumLengthMax.setLabelFor(spnSearchStadiumLengthMax);
-		lblSearchStadiumLengthMax.setBounds(55, 75, 45, 15);
+		lblSearchStadiumLengthMax.setBounds(25, 75, 50, 15);
 		pnlSearchStadiumLength.add(lblSearchStadiumLengthMax);
 
 		JPanel pnlSearchStadiumConstructionYear = new JPanel();
 		pnlSearchStadiumConstructionYear.setLayout(null);
 		pnlSearchStadiumConstructionYear.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-				"A\u00F1o de construcci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchStadiumConstructionYear.setBounds(320, 10, 155, 130);
+				"A\u00F1o construcci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlSearchStadiumConstructionYear.setBounds(210, 10, 100, 130);
 		getContentPane().add(pnlSearchStadiumConstructionYear);
 
 		spnSearchStadiumConstructionYearMin = new JSpinner();
 		spnSearchStadiumConstructionYearMin.setModel(new SpinnerNumberModel(0, 0, 3000, 1));
-		spnSearchStadiumConstructionYearMin.setBounds(50, 35, 50, 20);
+		spnSearchStadiumConstructionYearMin.setBounds(25, 35, 50, 20);
 		pnlSearchStadiumConstructionYear.add(spnSearchStadiumConstructionYearMin);
 
 		spnSearchStadiumConstructionYearMax = new JSpinner();
 		spnSearchStadiumConstructionYearMax.setModel(new SpinnerNumberModel(3000, 0, 3000, 1));
-		spnSearchStadiumConstructionYearMax.setBounds(50, 90, 50, 20);
+		spnSearchStadiumConstructionYearMax.setBounds(25, 90, 50, 20);
 		pnlSearchStadiumConstructionYear.add(spnSearchStadiumConstructionYearMax);
 
 		JLabel lblSearchStadiumConstructionYearMin = new JLabel("Mínimo");
 		lblSearchStadiumConstructionYearMin.setLabelFor(spnSearchStadiumConstructionYearMin);
-		lblSearchStadiumConstructionYearMin.setBounds(50, 20, 45, 15);
+		lblSearchStadiumConstructionYearMin.setBounds(25, 20, 50, 15);
 		pnlSearchStadiumConstructionYear.add(lblSearchStadiumConstructionYearMin);
 
 		JLabel lblSearchStadiumConstructionYearMax = new JLabel("Máximo");
 		lblSearchStadiumConstructionYearMax.setLabelFor(spnSearchStadiumConstructionYearMax);
-		lblSearchStadiumConstructionYearMax.setBounds(50, 75, 45, 15);
+		lblSearchStadiumConstructionYearMax.setBounds(25, 75, 50, 15);
 		pnlSearchStadiumConstructionYear.add(lblSearchStadiumConstructionYearMax);
 
 		JPanel pnlSearchStadiumSittingCapacity = new JPanel();
 		pnlSearchStadiumSittingCapacity.setLayout(null);
 		pnlSearchStadiumSittingCapacity.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-				"Capacidad sentados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchStadiumSittingCapacity.setBounds(320, 140, 155, 130);
+				"P\u00FAblico sentado", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlSearchStadiumSittingCapacity.setBounds(610, 10, 100, 130);
 		getContentPane().add(pnlSearchStadiumSittingCapacity);
 
 		spnSearchStadiumSittingCapacityMin = new JSpinner();
 		spnSearchStadiumSittingCapacityMin.setModel(new SpinnerNumberModel(0, 0, 250000, 1));
-		spnSearchStadiumSittingCapacityMin.setBounds(40, 35, 65, 20);
+		spnSearchStadiumSittingCapacityMin.setBounds(15, 35, 70, 20);
 		pnlSearchStadiumSittingCapacity.add(spnSearchStadiumSittingCapacityMin);
 
 		spnSearchStadiumSittingCapacityMax = new JSpinner();
 		spnSearchStadiumSittingCapacityMax.setModel(new SpinnerNumberModel(250000, 0, 250000, 1));
-		spnSearchStadiumSittingCapacityMax.setBounds(40, 90, 65, 20);
+		spnSearchStadiumSittingCapacityMax.setBounds(15, 90, 70, 20);
 		pnlSearchStadiumSittingCapacity.add(spnSearchStadiumSittingCapacityMax);
 
 		JLabel lblSearchStadiumSittingCapacityMin = new JLabel("Mínimo");
 		lblSearchStadiumSittingCapacityMin.setLabelFor(spnSearchStadiumSittingCapacityMin);
-		lblSearchStadiumSittingCapacityMin.setBounds(40, 20, 45, 15);
+		lblSearchStadiumSittingCapacityMin.setBounds(15, 20, 50, 15);
 		pnlSearchStadiumSittingCapacity.add(lblSearchStadiumSittingCapacityMin);
 
 		JLabel lblSearchStadiumSittingCapacityMax = new JLabel("Máximo");
 		lblSearchStadiumSittingCapacityMax.setLabelFor(spnSearchStadiumSittingCapacityMax);
-		lblSearchStadiumSittingCapacityMax.setBounds(40, 75, 45, 15);
+		lblSearchStadiumSittingCapacityMax.setBounds(15, 75, 45, 15);
 		pnlSearchStadiumSittingCapacity.add(lblSearchStadiumSittingCapacityMax);
 
 		JPanel pnlSearchStadiumStandingCapacity = new JPanel();
 		pnlSearchStadiumStandingCapacity.setLayout(null);
 		pnlSearchStadiumStandingCapacity.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-				"Capacidad de pie", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchStadiumStandingCapacity.setBounds(165, 140, 155, 130);
+				"P\u00FAblico de pie", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlSearchStadiumStandingCapacity.setBounds(510, 10, 100, 130);
 		getContentPane().add(pnlSearchStadiumStandingCapacity);
 
 		spnSearchStadiumStandingCapacityMin = new JSpinner();
 		spnSearchStadiumStandingCapacityMin.setModel(new SpinnerNumberModel(0, 0, 250000, 1));
-		spnSearchStadiumStandingCapacityMin.setBounds(40, 35, 65, 20);
+		spnSearchStadiumStandingCapacityMin.setBounds(15, 35, 70, 20);
 		pnlSearchStadiumStandingCapacity.add(spnSearchStadiumStandingCapacityMin);
 
 		spnSearchStadiumStandingCapacityMax = new JSpinner();
 		spnSearchStadiumStandingCapacityMax.setModel(new SpinnerNumberModel(250000, 0, 250000, 1));
-		spnSearchStadiumStandingCapacityMax.setBounds(40, 90, 65, 20);
+		spnSearchStadiumStandingCapacityMax.setBounds(15, 90, 70, 20);
 		pnlSearchStadiumStandingCapacity.add(spnSearchStadiumStandingCapacityMax);
 
 		JLabel lblSearchStadiumStandingCapacityMin = new JLabel("Mínimo");
 		lblSearchStadiumStandingCapacityMin.setLabelFor(spnSearchStadiumStandingCapacityMin);
-		lblSearchStadiumStandingCapacityMin.setBounds(40, 20, 45, 15);
+		lblSearchStadiumStandingCapacityMin.setBounds(15, 20, 50, 15);
 		pnlSearchStadiumStandingCapacity.add(lblSearchStadiumStandingCapacityMin);
 
 		JLabel lblSearchStadiumStandingCapacityMax = new JLabel("Máximo");
 		lblSearchStadiumStandingCapacityMax.setLabelFor(spnSearchStadiumStandingCapacityMax);
-		lblSearchStadiumStandingCapacityMax.setBounds(40, 75, 45, 15);
+		lblSearchStadiumStandingCapacityMax.setBounds(15, 75, 50, 15);
 		pnlSearchStadiumStandingCapacity.add(lblSearchStadiumStandingCapacityMax);
 
-		JPanel pnlSearchStadiumActions = new JPanel();
-		pnlSearchStadiumActions.setLayout(null);
-		pnlSearchStadiumActions.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Acciones",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlSearchStadiumActions.setBounds(475, 140, 155, 130);
-		getContentPane().add(pnlSearchStadiumActions);
-
-		JButton btnSearchStadiumSearch = new JButton("Buscar");
-		btnSearchStadiumSearch.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnSearchStadiumSearchActionPerformed();
-			}
-		});
-		btnSearchStadiumSearch.setBounds(35, 30, 85, 25);
-		pnlSearchStadiumActions.add(btnSearchStadiumSearch);
-
-		JButton btnSearchStadiumBack = new JButton("Volver");
-		btnSearchStadiumBack.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				btnSearchStadiumBackActionPerformed();
-			}
-		});
-		btnSearchStadiumBack.setBounds(35, 80, 85, 25);
-		pnlSearchStadiumActions.add(btnSearchStadiumBack);
-
-		pnlSearchTeamPanel = new SearchTeamPanel(10, 270, 310, 220, getContentPane(), teams, teamSearchService);
+		pnlSearchTeamPanel = new SearchTeamPanel(10, 140, 300, 220, getContentPane(), teams, teamSearchService);
 		getContentPane().add(pnlSearchTeamPanel);
 
 		JPanel pnlSearchStadiumResults = new JPanel();
 		pnlSearchStadiumResults
 				.setBorder(new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlSearchStadiumResults.setBounds(320, 270, 310, 220);
+		pnlSearchStadiumResults.setBounds(310, 140, 400, 220);
 		getContentPane().add(pnlSearchStadiumResults);
 		pnlSearchStadiumResults.setLayout(null);
 
 		JScrollPane scpSearchStadiumResults = new JScrollPane();
 		scpSearchStadiumResults.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scpSearchStadiumResults.setBounds(10, 15, 290, 195);
+		scpSearchStadiumResults.setBounds(10, 15, 380, 195);
 		pnlSearchStadiumResults.add(scpSearchStadiumResults);
 
 		lstSearchStadiumResults = new JList<>();
 		lstSearchStadiumResults.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstSearchStadiumResults.setCellRenderer(new StadiumCellRenderer());
 		scpSearchStadiumResults.setViewportView(lstSearchStadiumResults);
+
+		JButton btnSearchStadiumSearch = new JButton("Buscar");
+		btnSearchStadiumSearch.setBounds(630, 370, 80, 25);
+		getContentPane().add(btnSearchStadiumSearch);
+
+		JButton btnSearchStadiumBack = new JButton("Volver");
+		btnSearchStadiumBack.setBounds(530, 370, 80, 25);
+		getContentPane().add(btnSearchStadiumBack);
+		btnSearchStadiumBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnSearchStadiumBackActionPerformed();
+			}
+		});
+		btnSearchStadiumSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnSearchStadiumSearchActionPerformed();
+			}
+		});
 	}
 
 	private void formWindowOpened() {
@@ -320,6 +313,8 @@ public class StadiumSearch extends JDialog {
 		listCountries.add(0, StringUtils.EMPTY);
 
 		cbCountries.setModel(new DefaultComboBoxModel<>(listCountries.toArray(new String[listCountries.size()])));
+
+		btnSearchStadiumSearchActionPerformed();
 	}
 
 	private void btnSearchStadiumBackActionPerformed() {

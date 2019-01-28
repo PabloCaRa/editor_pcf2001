@@ -5,7 +5,6 @@ import com.pcfutbolmania.pcf2001.model.player.Position;
 
 public class PlayerFilter {
 
-	private String shortName;
 	private String name;
 
 	private Integer birthCountry;
@@ -73,14 +72,6 @@ public class PlayerFilter {
 	private Integer teamId;
 
 	private boolean free;
-
-	public String getShortName() {
-		return shortName;
-	}
-
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
 
 	public String getName() {
 		return name;
