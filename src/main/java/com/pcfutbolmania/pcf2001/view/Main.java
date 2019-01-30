@@ -36,6 +36,7 @@ import com.pcfutbolmania.pcf2001.model.team.Team;
 import com.pcfutbolmania.pcf2001.view.coach.CoachSearch;
 import com.pcfutbolmania.pcf2001.view.player.PlayerSearch;
 import com.pcfutbolmania.pcf2001.view.stadium.StadiumSearch;
+import com.pcfutbolmania.pcf2001.view.team.TeamSearch;
 import com.pcfutbolmania.pcf2001.view.utils.CountryWindow;
 
 public class Main {
@@ -268,6 +269,14 @@ public class Main {
 		menuBar.add(mnSearch);
 
 		JMenuItem mntmSearchTeam = new JMenuItem("Equipo");
+		mntmSearchTeam.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TeamSearch teamSearch = new TeamSearch(teams, countries);
+				teamSearch.setLocationRelativeTo(null);
+				teamSearch.setVisible(true);
+			}
+		});
 		mnSearch.add(mntmSearchTeam);
 
 		JMenuItem mntmSearchPlayer = new JMenuItem("Jugador");
