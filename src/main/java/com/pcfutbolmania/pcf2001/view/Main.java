@@ -10,8 +10,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -19,9 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.commons.collections4.MapUtils;
@@ -75,18 +71,11 @@ public class Main {
 	 */
 	public Main() {
 
-		LookAndFeelInfo lf[] = UIManager.getInstalledLookAndFeels();
-
-		Class<?> lfClass = null;
-
 		try {
-			lfClass = Class.forName(lf[3].getClassName());
-			LookAndFeel lfObject = null;
-			lfObject = (LookAndFeel) lfClass.newInstance();
-			UIManager.setLookAndFeel(lfObject);
-		} catch (InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException
-				| ClassNotFoundException ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			JOptionPane.showMessageDialog(frmEpcf, "Error setting look and feel", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		filesLoaded = false;

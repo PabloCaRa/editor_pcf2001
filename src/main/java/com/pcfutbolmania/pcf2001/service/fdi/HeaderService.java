@@ -51,4 +51,20 @@ public class HeaderService {
 		});
 	}
 
+	public void modifyHeader(Map<Integer, ? extends Entity> entities, int sizeDifference, int entityId) {
+
+		Entity modifiedEntity = entities.get(entityId);
+		modifiedEntity.getHeader().setLength(modifiedEntity.getHeader().getLength() + sizeDifference);
+		modifiedEntity.getHeader()
+				.setEnd(modifiedEntity.getHeader().getInit() + modifiedEntity.getHeader().getLength());
+
+		entities.values().parallelStream().forEach(entity -> {
+			if (entity.getHeader().getId() > entityId) {
+				entity.getHeader().setInit(entity.getHeader().getInit() + sizeDifference);
+				entity.getHeader().setEnd(entity.getHeader().getInit() + entity.getHeader().getLength());
+			}
+		});
+
+	}
+
 }

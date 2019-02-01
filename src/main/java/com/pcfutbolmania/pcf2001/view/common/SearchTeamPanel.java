@@ -27,7 +27,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.pcfutbolmania.pcf2001.model.team.Team;
 import com.pcfutbolmania.pcf2001.service.fdi.team.TeamSearchService;
-import com.pcfutbolmania.pcf2001.view.team.TeamCellRenderer;
 
 public class SearchTeamPanel extends JPanel {
 
@@ -65,7 +64,7 @@ public class SearchTeamPanel extends JPanel {
 		lstTeams = new JList<>();
 		lstTeams.setBorder(null);
 		lstTeams.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lstTeams.setCellRenderer(new TeamCellRenderer());
+		lstTeams.setCellRenderer(new SearchResultsCellRenderer());
 		pnlSearchPlayerTeamResults.setViewportView(lstTeams);
 
 		txtSearchPlayerTeam = new JTextField();

@@ -16,6 +16,8 @@ public class Config {
 	public static final String STADIUMS_FILE = "stadiums_file";
 	public static final String COUNTRIES_FILE = "countries_file";
 
+	public static final String STADIUM_IMAGES_FILE = "stadium_images_file";
+
 	private static Config instance = null;
 	private static Properties props;
 
@@ -61,6 +63,9 @@ public class Config {
 		Config.props.put(PLAYERS_FILE, sb.toString().concat(fileProps.getProperty("options.file.players")));
 		Config.props.put(COUNTRIES_FILE, sb.toString().concat(fileProps.getProperty("options.folder.texts")
 				.concat(File.separator).concat(fileProps.getProperty("options.file.countries"))));
+
+		Config.props.put(STADIUM_IMAGES_FILE,
+				sb.toString().concat(fileProps.getProperty("options.folder.stadiums").concat(File.separator)));
 
 		return props;
 	}

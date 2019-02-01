@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -36,6 +38,7 @@ import com.pcfutbolmania.pcf2001.model.team.Team;
 import com.pcfutbolmania.pcf2001.service.fdi.stadium.StadiumSearchService;
 import com.pcfutbolmania.pcf2001.service.fdi.team.TeamSearchService;
 import com.pcfutbolmania.pcf2001.service.pak.CountryService;
+import com.pcfutbolmania.pcf2001.view.common.SearchResultsCellRenderer;
 import com.pcfutbolmania.pcf2001.view.common.SearchTeamPanel;
 
 public class StadiumSearch extends JDialog {
@@ -48,6 +51,7 @@ public class StadiumSearch extends JDialog {
 
 	private Map<Integer, Stadium> stadiums;
 	private Map<Integer, Country> countries;
+	private Map<Integer, Team> teams;
 
 	private JTextField txtSearchStadiumName;
 
@@ -81,6 +85,7 @@ public class StadiumSearch extends JDialog {
 	 * Create the dialog.
 	 */
 	public StadiumSearch(Map<Integer, Stadium> stadiums, Map<Integer, Team> teams, Map<Integer, Country> countries) {
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -95,6 +100,7 @@ public class StadiumSearch extends JDialog {
 
 		this.stadiums = stadiums;
 		this.countries = countries;
+		this.teams = teams;
 
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -283,16 +289,22 @@ public class StadiumSearch extends JDialog {
 		pnlSearchStadiumResults.add(scpSearchStadiumResults);
 
 		lstSearchStadiumResults = new JList<>();
+		lstSearchStadiumResults.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lstSearchStadiumResultsMouseClicked(e);
+			}
+		});
 		lstSearchStadiumResults.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lstSearchStadiumResults.setCellRenderer(new StadiumCellRenderer());
+		lstSearchStadiumResults.setCellRenderer(new SearchResultsCellRenderer());
 		scpSearchStadiumResults.setViewportView(lstSearchStadiumResults);
 
 		JButton btnSearchStadiumSearch = new JButton("Buscar");
-		btnSearchStadiumSearch.setBounds(630, 370, 80, 25);
+		btnSearchStadiumSearch.setBounds(530, 370, 80, 25);
 		getContentPane().add(btnSearchStadiumSearch);
 
 		JButton btnSearchStadiumBack = new JButton("Volver");
-		btnSearchStadiumBack.setBounds(530, 370, 80, 25);
+		btnSearchStadiumBack.setBounds(630, 370, 80, 25);
 		getContentPane().add(btnSearchStadiumBack);
 		btnSearchStadiumBack.addActionListener(new ActionListener() {
 			@Override
@@ -359,5 +371,15 @@ public class StadiumSearch extends JDialog {
 		});
 		lstSearchStadiumResults.setModel(model);
 
+	}
+
+	private void lstSearchStadiumResultsMouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1
+				&& !lstSearchStadiumResults.isSelectionEmpty()) {
+			StadiumInfo stadiumInfo = new StadiumInfo(lstSearchStadiumResults.getSelectedValue(), stadiums, countries,
+					teams);
+			stadiumInfo.setLocationRelativeTo(null);
+			stadiumInfo.setVisible(true);
+		}
 	}
 }
