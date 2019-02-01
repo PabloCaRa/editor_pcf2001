@@ -6,9 +6,6 @@ import com.pcfutbolmania.pcf2001.model.Entity;
 
 public class Stadium extends Entity {
 
-	private short nameLength;
-	private String name;
-
 	private int width;
 	private int length;
 
@@ -22,22 +19,6 @@ public class Stadium extends Entity {
 	private int standingCapacity;
 
 	private List<Integer> teams;
-
-	public short getNameLength() {
-		return nameLength;
-	}
-
-	public void setNameLength(short nameLength) {
-		this.nameLength = nameLength;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public int getWidth() {
 		return width;
@@ -105,10 +86,9 @@ public class Stadium extends Entity {
 
 	@Override
 	public String toString() {
-		return getHeader().toString() + " Stadium [nameLength=" + nameLength + ", name=" + name + ", width=" + width
-				+ ", length=" + length + ", unkkown=" + unknown + ", country=" + countryId + ", constructionYear="
+		return "Stadium [width=" + width + ", length=" + length + ", countryId=" + countryId + ", constructionYear="
 				+ constructionYear + ", sittingCapacity=" + sittingCapacity + ", standingCapacity=" + standingCapacity
-				+ "]";
+				+ ", teams=" + teams + ", getHeader()=" + getHeader() + ", getName()=" + getName() + "]";
 	}
 
 }

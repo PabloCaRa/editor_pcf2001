@@ -13,9 +13,6 @@ public class Coach extends Entity {
 	private short shortNameLength;
 	private String shortName;
 
-	private short nameLength;
-	private String name;
-
 	private byte[] ddbb;
 
 	private List<Integer> teams;
@@ -60,22 +57,6 @@ public class Coach extends Entity {
 		this.shortName = shortName;
 	}
 
-	public short getNameLength() {
-		return nameLength;
-	}
-
-	public void setNameLength(short nameLength) {
-		this.nameLength = nameLength;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public byte[] getDdbb() {
 		return ddbb;
 	}
@@ -94,8 +75,8 @@ public class Coach extends Entity {
 
 	@Override
 	public String toString() {
-		return getHeader().toString() + " Coach [lengthSum=" + lengthSum + ", playableCoach=" + basic + ", photoId="
-				+ photoId + ", shortNameLength=" + shortNameLength + ", shortName=" + shortName + ", nameLength="
-				+ nameLength + ", name=" + name;
+		return "Coach [basic=" + basic + ", photoId=" + photoId + ", shortName=" + shortName + ", teams=" + teams
+				+ ", getHeader()=" + getHeader() + ", getName()=" + getName() + "]";
 	}
+
 }

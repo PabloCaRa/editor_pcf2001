@@ -15,8 +15,6 @@ public class Player extends Entity {
 
 	private short shortNameLength;
 	private String shortName;
-	private short nameLength;
-	private String name;
 
 	private int genericNumber;
 	private int unknown;
@@ -100,22 +98,6 @@ public class Player extends Entity {
 
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
-	}
-
-	public short getNameLength() {
-		return nameLength;
-	}
-
-	public void setNameLength(short nameLength) {
-		this.nameLength = nameLength;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getGenericNumber() {
@@ -317,4 +299,13 @@ public class Player extends Entity {
 	public void setTeams(List<Integer> teams) {
 		this.teams = teams;
 	}
+
+	@Override
+	public String toString() {
+		return "Player [shortName=" + shortName + ", getName()=" + getName() + ", nationality=" + nationality
+				+ ", demarcation=" + demarcation + ", birthDay=" + birthDay + ", birthMonth=" + birthMonth
+				+ ", birthYear=" + birthYear + ", height=" + height + ", weight=" + weight + ", birthCountry="
+				+ birthCountry + "]";
+	}
+
 }

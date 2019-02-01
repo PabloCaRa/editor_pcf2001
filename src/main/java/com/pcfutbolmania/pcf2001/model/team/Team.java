@@ -23,9 +23,6 @@ public class Team extends Entity {
 	private short stadiumId;
 	private int countryId;
 
-	private short nameLength;
-	private String name;
-
 	private short foundationYear;
 	private int unknown;
 	private int supporters;
@@ -154,22 +151,6 @@ public class Team extends Entity {
 
 	public void setCountryId(int countryId) {
 		this.countryId = countryId;
-	}
-
-	public short getNameLength() {
-		return nameLength;
-	}
-
-	public void setNameLength(short nameLength) {
-		this.nameLength = nameLength;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public short getFoundationYear() {
@@ -362,6 +343,15 @@ public class Team extends Entity {
 
 	public void setUnregisteredPlayers(List<Integer> unregisteredPlayers) {
 		this.unregisteredPlayers = unregisteredPlayers;
+	}
+
+	@Override
+	public String toString() {
+		return "Team [shortName=" + shortName + ", stadiumId=" + stadiumId + ", countryId=" + countryId
+				+ ", foundationYear=" + foundationYear + ", budget=" + budget + ", filialTeamId=" + filialTeamId
+				+ ", segundaBGroup=" + segundaBGroup + ", terceraGroup=" + terceraGroup + ", coaches=" + coaches
+				+ ", registeredPlayers=" + registeredPlayers + ", unregisteredPlayers=" + unregisteredPlayers
+				+ ", getHeader()=" + getHeader() + ", getName()=" + getName() + "]";
 	}
 
 }
