@@ -33,6 +33,7 @@ import com.pcfutbolmania.pcf2001.model.search.TeamFilter;
 import com.pcfutbolmania.pcf2001.model.team.Team;
 import com.pcfutbolmania.pcf2001.service.fdi.team.TeamSearchService;
 import com.pcfutbolmania.pcf2001.service.pak.CountryService;
+import com.pcfutbolmania.pcf2001.view.common.SearchResultsCellRenderer;
 
 public class TeamSearch extends JDialog {
 
@@ -205,7 +206,7 @@ public class TeamSearch extends JDialog {
 
 		lstSearchStadiumResults = new JList<>();
 		lstSearchStadiumResults.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lstSearchStadiumResults.setCellRenderer(new TeamCellRenderer());
+		lstSearchStadiumResults.setCellRenderer(new SearchResultsCellRenderer());
 		scpTeamSearchResults.setViewportView(lstSearchStadiumResults);
 
 		JButton btnTeamSearchSearch = new JButton("Buscar");
@@ -215,7 +216,7 @@ public class TeamSearch extends JDialog {
 				btnTeamSearchSearchActionPerformed();
 			}
 		});
-		btnTeamSearchSearch.setBounds(430, 370, 80, 25);
+		btnTeamSearchSearch.setBounds(330, 370, 80, 25);
 		getContentPane().add(btnTeamSearchSearch);
 
 		JButton btnTeamSearchBack = new JButton("Volver");
@@ -225,7 +226,7 @@ public class TeamSearch extends JDialog {
 				btnTeamSearchBackActionPerformed();
 			}
 		});
-		btnTeamSearchBack.setBounds(330, 370, 85, 25);
+		btnTeamSearchBack.setBounds(430, 370, 80, 25);
 		getContentPane().add(btnTeamSearchBack);
 	}
 

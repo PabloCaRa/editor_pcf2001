@@ -39,6 +39,7 @@ import com.pcfutbolmania.pcf2001.model.team.Team;
 import com.pcfutbolmania.pcf2001.service.fdi.player.PlayerSearchService;
 import com.pcfutbolmania.pcf2001.service.fdi.team.TeamSearchService;
 import com.pcfutbolmania.pcf2001.service.pak.CountryService;
+import com.pcfutbolmania.pcf2001.view.common.SearchResultsCellRenderer;
 import com.pcfutbolmania.pcf2001.view.common.SearchTeamPanel;
 
 public class PlayerSearch extends JDialog {
@@ -124,6 +125,7 @@ public class PlayerSearch extends JDialog {
 	 * Create the dialog.
 	 */
 	public PlayerSearch(Map<Integer, Country> countries, Map<Integer, Player> players, Map<Integer, Team> teams) {
+		setModalityType(ModalityType.APPLICATION_MODAL);
 
 		countryService = new CountryService();
 		playerSearchService = new PlayerSearchService();
@@ -729,18 +731,18 @@ public class PlayerSearch extends JDialog {
 		lstResults = new JList<>();
 		lstResults.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lstResults.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lstResults.setCellRenderer(new PlayerCellRenderer());
+		lstResults.setCellRenderer(new SearchResultsCellRenderer());
 		pnlSearchPlayerResults.setViewportView(lstResults);
 
 		pnlSearchTeamPanel = new SearchTeamPanel(10, 400, 300, 220, getContentPane(), teams, teamSearchService);
 		getContentPane().add(pnlSearchTeamPanel);
 
 		JButton btnSearch = new JButton("Buscar");
-		btnSearch.setBounds(730, 630, 80, 25);
+		btnSearch.setBounds(630, 630, 80, 25);
 		getContentPane().add(btnSearch);
 
 		JButton btnBack = new JButton("Volver");
-		btnBack.setBounds(630, 630, 80, 25);
+		btnBack.setBounds(730, 630, 80, 25);
 		getContentPane().add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			@Override
