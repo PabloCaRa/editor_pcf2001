@@ -20,6 +20,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.pcfutbolmania.pcf2001.model.coach.Coach;
 import com.pcfutbolmania.pcf2001.model.search.CoachFilter;
 import com.pcfutbolmania.pcf2001.model.team.Team;
@@ -41,6 +43,8 @@ public class CoachSearch extends JDialog {
 	private JList<Coach> lstSearchCoachResults;
 
 	private SearchTeamPanel pnlSearchTeamPanel;
+
+	private JPanel pnlSearchCoachResults;
 
 	/**
 	 * Create the dialog.
@@ -85,7 +89,7 @@ public class CoachSearch extends JDialog {
 		pnlSearchCoachName.add(txtSearchCoachName);
 		txtSearchCoachName.setColumns(10);
 
-		JPanel pnlSearchCoachResults = new JPanel();
+		pnlSearchCoachResults = new JPanel();
 		pnlSearchCoachResults
 				.setBorder(new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlSearchCoachResults.setBounds(310, 10, 300, 285);
@@ -153,5 +157,12 @@ public class CoachSearch extends JDialog {
 			model.addElement(filteredCoach);
 		});
 		lstSearchCoachResults.setModel(model);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.valueOf(filteredCoaches.size()));
+		sb.append(StringUtils.SPACE);
+		sb.append(filteredCoaches.size() == 1 ? "entrenador encontrado" : "entrenadores encontrados");
+		pnlSearchCoachResults
+				.setBorder(new TitledBorder(null, sb.toString(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	}
 }

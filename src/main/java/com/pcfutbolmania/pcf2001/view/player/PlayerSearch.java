@@ -121,6 +121,8 @@ public class PlayerSearch extends JDialog {
 
 	private SearchTeamPanel pnlSearchTeamPanel;
 
+	private JScrollPane pnlSearchPlayerResults;
+
 	/**
 	 * Create the dialog.
 	 */
@@ -719,7 +721,7 @@ public class PlayerSearch extends JDialog {
 		lblMaxRightFreeKick.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerRightFreeKick.add(lblMaxRightFreeKick);
 
-		JScrollPane pnlSearchPlayerResults = new JScrollPane();
+		pnlSearchPlayerResults = new JScrollPane();
 		pnlSearchPlayerResults.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		pnlSearchPlayerResults.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		pnlSearchPlayerResults.setBorder(null);
@@ -863,5 +865,12 @@ public class PlayerSearch extends JDialog {
 			model.addElement(player);
 		});
 		lstResults.setModel(model);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.valueOf(filteredPlayers.size()));
+		sb.append(StringUtils.SPACE);
+		sb.append(filteredPlayers.size() == 1 ? "jugador encontrado" : "jugadores encontrados");
+		pnlSearchPlayerResults.setViewportBorder(
+				new TitledBorder(null, sb.toString(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	}
 }

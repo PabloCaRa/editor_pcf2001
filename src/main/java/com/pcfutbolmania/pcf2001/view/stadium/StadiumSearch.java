@@ -81,6 +81,8 @@ public class StadiumSearch extends JDialog {
 
 	private JList<Stadium> lstSearchStadiumResults;
 
+	private JPanel pnlSearchStadiumResults;
+
 	/**
 	 * Create the dialog.
 	 */
@@ -276,7 +278,7 @@ public class StadiumSearch extends JDialog {
 		pnlSearchTeamPanel = new SearchTeamPanel(10, 140, 300, 220, getContentPane(), teams, teamSearchService);
 		getContentPane().add(pnlSearchTeamPanel);
 
-		JPanel pnlSearchStadiumResults = new JPanel();
+		pnlSearchStadiumResults = new JPanel();
 		pnlSearchStadiumResults
 				.setBorder(new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlSearchStadiumResults.setBounds(310, 140, 400, 220);
@@ -371,6 +373,12 @@ public class StadiumSearch extends JDialog {
 		});
 		lstSearchStadiumResults.setModel(model);
 
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.valueOf(filteredStadiums.size()));
+		sb.append(StringUtils.SPACE);
+		sb.append(filteredStadiums.size() == 1 ? "estadio encontrado" : "estadios encontrados");
+		pnlSearchStadiumResults
+				.setBorder(new TitledBorder(null, sb.toString(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	}
 
 	private void lstSearchStadiumResultsMouseClicked(MouseEvent e) {

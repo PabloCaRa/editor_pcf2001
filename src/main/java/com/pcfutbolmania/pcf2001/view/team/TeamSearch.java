@@ -62,6 +62,8 @@ public class TeamSearch extends JDialog {
 
 	private JSpinner spnTeamSearchBudgetMax;
 
+	private JPanel pnlTeamSearchResults;
+
 	/**
 	 * Create the dialog.
 	 */
@@ -192,7 +194,7 @@ public class TeamSearch extends JDialog {
 		lblTeamSearchBudgetMax.setBounds(25, 75, 50, 15);
 		pnlTeamSearchBudget.add(lblTeamSearchBudgetMax);
 
-		JPanel pnlTeamSearchResults = new JPanel();
+		pnlTeamSearchResults = new JPanel();
 		pnlTeamSearchResults.setLayout(null);
 		pnlTeamSearchResults
 				.setBorder(new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -268,5 +270,12 @@ public class TeamSearch extends JDialog {
 			model.addElement(team);
 		});
 		lstSearchStadiumResults.setModel(model);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.valueOf(filteredTeams.size()));
+		sb.append(StringUtils.SPACE);
+		sb.append(filteredTeams.size() == 1 ? "equipo encontrado" : "equipos encontrados");
+		pnlTeamSearchResults
+				.setBorder(new TitledBorder(null, sb.toString(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	}
 }
