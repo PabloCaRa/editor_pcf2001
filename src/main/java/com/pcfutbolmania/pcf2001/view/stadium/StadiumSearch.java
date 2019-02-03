@@ -385,7 +385,7 @@ public class StadiumSearch extends JDialog {
 		if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1
 				&& !lstSearchStadiumResults.isSelectionEmpty()) {
 			StadiumInfo stadiumInfo = new StadiumInfo(lstSearchStadiumResults.getSelectedValue(), stadiums, countries,
-					teams);
+					teams, false);
 			stadiumInfo.setLocationRelativeTo(null);
 			stadiumInfo.setVisible(true);
 		}

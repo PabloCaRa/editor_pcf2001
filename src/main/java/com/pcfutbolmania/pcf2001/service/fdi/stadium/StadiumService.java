@@ -127,7 +127,20 @@ public class StadiumService extends AbstractEntityService {
 	public void initilizeHeader(Map<Integer, Stadium> stadiums, Stadium stadium) {
 		Header header = new Header();
 		header.setId(headerService.getIdToCreateEntity(stadiums));
+		header.setInit(headerService.getLastEndToCreateEntity(stadiums));
 		stadium.setHeader(header);
+	}
+
+	public void modifyHeader(Map<Integer, Stadium> stadiums, Stadium stadium, boolean createEntity,
+			int sizeDifference) {
+		Header stadiumHeader = stadium.getHeader();
+		stadiumHeader.setLength(Stadium.STADIUM_BYTE_SIZE + stadium.getNameLength().intValue());
+		if (createEntity) {
+			stadium.setTeams(new ArrayList<>());
+			headerService.createEntity(stadiums, stadium);
+		} else {
+			headerService.modifyEntity(stadiums, stadium, sizeDifference);
+		}
 	}
 
 	private String getFilePath(int stadiumId) {

@@ -34,7 +34,6 @@ import com.pcfutbolmania.pcf2001.helper.PcfFileHelper;
 import com.pcfutbolmania.pcf2001.model.pak.Country;
 import com.pcfutbolmania.pcf2001.model.stadium.Stadium;
 import com.pcfutbolmania.pcf2001.model.team.Team;
-import com.pcfutbolmania.pcf2001.service.fdi.HeaderService;
 import com.pcfutbolmania.pcf2001.service.fdi.stadium.StadiumService;
 import com.pcfutbolmania.pcf2001.service.pak.CountryService;
 import com.pcfutbolmania.pcf2001.view.common.EntityTeamsPanel;
@@ -44,7 +43,6 @@ public class StadiumInfo extends JDialog {
 	private static final long serialVersionUID = -4797869970887236645L;
 
 	private StadiumService stadiumService;
-	private HeaderService headerService;
 	private CountryService countryService;
 
 	private Map<Integer, Stadium> stadiums;
@@ -75,18 +73,16 @@ public class StadiumInfo extends JDialog {
 	 * Create the dialog.
 	 */
 	public StadiumInfo(Stadium stadium, Map<Integer, Stadium> stadiums, Map<Integer, Country> countries,
-			Map<Integer, Team> teams) {
+			Map<Integer, Team> teams, boolean createStadium) {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 
 		stadiumService = new StadiumService();
-		headerService = new HeaderService();
 		countryService = new CountryService();
 
 		this.stadium = stadium;
 		this.stadiums = stadiums;
 		this.countries = countries;
-
-		createStadium = stadium.getHeader() == null;
+		this.createStadium = createStadium;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StadiumInfo.class.getResource("/images/icons/stadium.png")));
 		setResizable(false);
@@ -210,7 +206,8 @@ public class StadiumInfo extends JDialog {
 		spnStadiumConstructionYear = new JSpinner();
 		spnStadiumConstructionYear.setBounds(175, 165, 50, 20);
 		pnlStadiumData.add(spnStadiumConstructionYear);
-		spnStadiumConstructionYear.setModel(new SpinnerNumberModel(0, 0, 3000, 1));
+		spnStadiumConstructionYear.setModel(new SpinnerNumberModel(new Short((short) 0), new Short((short) 0),
+				new Short((short) 3000), new Short((short) 1)));
 
 		JLabel lblStadiumConstructionYear = new JLabel("Año de construcción:");
 		lblStadiumConstructionYear.setBounds(25, 165, 110, 20);
@@ -276,24 +273,31 @@ public class StadiumInfo extends JDialog {
 
 	private void btnStadiumAcceptActionPerformed() {
 
-		int sizeDifference = txtStadiumName.getText().length() - stadium.getNameLength().intValue();
+		String validateMessage = validateFields();
+		if (StringUtils.isBlank(validateMessage)) {
+			int sizeDifference = createStadium ? txtStadiumName.getText().length()
+					: txtStadiumName.getText().length() - stadium.getNameLength().intValue();
 
-		stadium.setNameLength(new Integer(txtStadiumName.getText().length()).shortValue());
-		stadium.setName(txtStadiumName.getText());
+			stadium.setNameLength(new Integer(txtStadiumName.getText().length()).shortValue());
+			stadium.setName(txtStadiumName.getText());
 
-		stadium.setCountryId(cbStadiumCountry.getSelectedIndex() - 1);
+			stadium.setCountryId(cbStadiumCountry.getSelectedIndex() - 1);
 
-		stadium.setWidth((int) spnStadiumWidth.getValue());
-		stadium.setLength((int) spnStadiumLength.getValue());
-		stadium.setSittingCapacity((int) spnStadiumSittingCapacity.getValue());
-		stadium.setStandingCapacity((int) spnStadiumStandingCapacity.getValue());
-		stadium.setConstructionYear((short) spnStadiumConstructionYear.getValue());
+			stadium.setWidth((int) spnStadiumWidth.getValue());
+			stadium.setLength((int) spnStadiumLength.getValue());
+			stadium.setSittingCapacity((int) spnStadiumSittingCapacity.getValue());
+			stadium.setStandingCapacity((int) spnStadiumStandingCapacity.getValue());
+			stadium.setConstructionYear((short) spnStadiumConstructionYear.getValue());
 
-		stadiums.put(stadium.getHeader().getId(), stadium);
+			stadiums.put(stadium.getHeader().getId(), stadium);
 
-		headerService.modifyHeader(stadiums, sizeDifference, stadium.getHeader().getId());
+			stadiumService.modifyHeader(stadiums, stadium, createStadium, sizeDifference);
 
-		this.dispose();
+			this.dispose();
+		} else {
+			JOptionPane.showMessageDialog(this, validateMessage, "Aviso", JOptionPane.WARNING_MESSAGE);
+		}
+
 	}
 
 	private void btnStadiumLoadImageActionPerformed() {
@@ -329,5 +333,23 @@ public class StadiumInfo extends JDialog {
 		} catch (StadiumImageDeleteException exception) {
 			JOptionPane.showMessageDialog(this, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private String validateFields() {
+
+		String validateMessage = StringUtils.EMPTY;
+
+		if (StringUtils.isBlank(txtStadiumName.getText())) {
+			validateMessage = "El nombre no puede estar vacio";
+		}
+
+		if (cbStadiumCountry.getSelectedIndex() == 0) {
+			if (StringUtils.isNotBlank(validateMessage)) {
+				validateMessage += StringUtils.LF;
+			}
+			validateMessage += "Es obligatorio seleccionar un país";
+		}
+
+		return validateMessage;
 	}
 }

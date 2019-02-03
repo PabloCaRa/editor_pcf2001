@@ -318,7 +318,7 @@ public class Main {
 		mntmCreateStadium.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StadiumInfo stadiumInfo = new StadiumInfo(new Stadium(), stadiums, countries, teams);
+				StadiumInfo stadiumInfo = new StadiumInfo(new Stadium(), stadiums, countries, teams, true);
 				stadiumInfo.setLocationRelativeTo(null);
 				stadiumInfo.setVisible(true);
 			}

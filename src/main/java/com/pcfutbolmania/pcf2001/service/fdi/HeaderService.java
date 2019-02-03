@@ -54,27 +54,42 @@ public class HeaderService {
 		});
 	}
 
-	public void modifyHeader(Map<Integer, ? extends Entity> entities, int sizeDifference, int entityId) {
-
-		Entity modifiedEntity = entities.get(entityId);
-		modifiedEntity.getHeader().setLength(modifiedEntity.getHeader().getLength() + sizeDifference);
-		modifiedEntity.getHeader()
-				.setEnd(modifiedEntity.getHeader().getInit() + modifiedEntity.getHeader().getLength());
-
-		entities.values().parallelStream().forEach(entity -> {
-			if (entity.getHeader().getId() > entityId) {
-				entity.getHeader().setInit(entity.getHeader().getInit() + sizeDifference);
-				entity.getHeader().setEnd(entity.getHeader().getInit() + entity.getHeader().getLength());
-			}
+	public void createEntity(Map<Integer, ? extends Entity> entities, Entity entity) {
+		entities.values().parallelStream().forEach(entityToModify -> {
+			entityToModify.getHeader().setInit(entityToModify.getHeader().getInit() + Header.HEADER_BYTE_SIZE);
+			entityToModify.getHeader()
+					.setEnd(entityToModify.getHeader().getId() + entityToModify.getHeader().getLength());
 		});
+	}
 
+	public void modifyEntity(Map<Integer, ? extends Entity> entities, Entity entity, int sizeDifference) {
+		entity.getHeader().setEnd(entity.getHeader().getInit() + entity.getHeader().getLength());
+
+		entities.values().parallelStream()
+				.filter(entityToModify -> entityToModify.getHeader().getId() > entity.getHeader().getId())
+				.forEach(entityToModify -> {
+					entityToModify.getHeader().setInit(entityToModify.getHeader().getInit() + sizeDifference);
+					entityToModify.getHeader()
+							.setEnd(entityToModify.getHeader().getInit() + entityToModify.getHeader().getLength());
+				});
+
+		entities.values().parallelStream().forEach(entityToModify -> {
+
+		});
 	}
 
 	public int getIdToCreateEntity(Map<Integer, ? extends Entity> entities) {
+		return getLastHeader(entities).getId() + 1;
+	}
+
+	public int getLastEndToCreateEntity(Map<Integer, ? extends Entity> entities) {
+		return getLastHeader(entities).getEnd();
+	}
+
+	private Header getLastHeader(Map<Integer, ? extends Entity> entities) {
 		Comparator<Header> comparator = Comparator.comparing(Header::getId);
 		List<Header> headers = entities.values().parallelStream().map(Entity::getHeader).collect(Collectors.toList());
-		int max = headers.parallelStream().max(comparator).get().getId();
-		return max + 1;
+		return headers.parallelStream().max(comparator).get();
 	}
 
 }

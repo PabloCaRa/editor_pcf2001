@@ -2,6 +2,7 @@ package com.pcfutbolmania.pcf2001.model;
 
 public class Header {
 
+	public static final int HEADER_BYTE_SIZE = 13;
 	public static final int INIT_FILE_LENGTH = 16;
 	public static final Double INIT_FILE_CONTENT = 1.0800405746942644E21;
 
