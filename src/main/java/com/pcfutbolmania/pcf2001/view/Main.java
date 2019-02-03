@@ -31,6 +31,7 @@ import com.pcfutbolmania.pcf2001.model.stadium.Stadium;
 import com.pcfutbolmania.pcf2001.model.team.Team;
 import com.pcfutbolmania.pcf2001.view.coach.CoachSearch;
 import com.pcfutbolmania.pcf2001.view.player.PlayerSearch;
+import com.pcfutbolmania.pcf2001.view.stadium.StadiumInfo;
 import com.pcfutbolmania.pcf2001.view.stadium.StadiumSearch;
 import com.pcfutbolmania.pcf2001.view.team.TeamSearch;
 import com.pcfutbolmania.pcf2001.view.utils.CountryWindow;
@@ -300,6 +301,29 @@ public class Main {
 			}
 		});
 		mnSearch.add(mntmSearchStadium);
+
+		JMenu mnuCreate = new JMenu("Crear");
+		menuBar.add(mnuCreate);
+
+		JMenuItem mntmCreateTeam = new JMenuItem("Equipo");
+		mnuCreate.add(mntmCreateTeam);
+
+		JMenuItem mntmCreatePlayer = new JMenuItem("Jugador");
+		mnuCreate.add(mntmCreatePlayer);
+
+		JMenuItem mntmCreateCoach = new JMenuItem("Entrenador");
+		mnuCreate.add(mntmCreateCoach);
+
+		JMenuItem mntmCreateStadium = new JMenuItem("Estadio");
+		mntmCreateStadium.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				StadiumInfo stadiumInfo = new StadiumInfo(new Stadium(), stadiums, countries, teams);
+				stadiumInfo.setLocationRelativeTo(null);
+				stadiumInfo.setVisible(true);
+			}
+		});
+		mnuCreate.add(mntmCreateStadium);
 
 		JMenu mnuUtils = new JMenu("Utilidades");
 		menuBar.add(mnuUtils);

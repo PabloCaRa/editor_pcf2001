@@ -1,6 +1,5 @@
 package com.pcfutbolmania.pcf2001.view.stadium;
 
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +22,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -32,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.pcfutbolmania.pcf2001.exception.stadium.StadiumImageDeleteException;
 import com.pcfutbolmania.pcf2001.exception.stadium.StadiumImageSaveException;
+import com.pcfutbolmania.pcf2001.helper.PcfFileHelper;
 import com.pcfutbolmania.pcf2001.model.pak.Country;
 import com.pcfutbolmania.pcf2001.model.stadium.Stadium;
 import com.pcfutbolmania.pcf2001.model.team.Team;
@@ -52,6 +51,7 @@ public class StadiumInfo extends JDialog {
 	private Map<Integer, Country> countries;
 
 	private Stadium stadium;
+	private boolean createStadium;
 
 	private JTextField txtStadiumName;
 
@@ -86,6 +86,8 @@ public class StadiumInfo extends JDialog {
 		this.stadiums = stadiums;
 		this.countries = countries;
 
+		createStadium = stadium.getHeader() == null;
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StadiumInfo.class.getResource("/images/icons/stadium.png")));
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -96,93 +98,12 @@ public class StadiumInfo extends JDialog {
 			}
 		});
 
-		setBounds(100, 100, 725, 405);
+		setBounds(100, 100, 675, 405);
 		getContentPane().setLayout(null);
-
-		JPanel pnlStadiumName = new JPanel();
-		pnlStadiumName.setLayout(null);
-		pnlStadiumName.setBorder(new TitledBorder(null, "Nombre", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlStadiumName.setBounds(10, 10, 200, 65);
-		getContentPane().add(pnlStadiumName);
-
-		txtStadiumName = new JTextField();
-		txtStadiumName.setColumns(10);
-		txtStadiumName.setBounds(15, 25, 170, 20);
-		pnlStadiumName.add(txtStadiumName);
-
-		JPanel pnlStadiumCountry = new JPanel();
-		pnlStadiumCountry.setLayout(null);
-		pnlStadiumCountry.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pa\u00EDs",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlStadiumCountry.setBounds(10, 75, 200, 65);
-		getContentPane().add(pnlStadiumCountry);
-
-		cbStadiumCountry = new JComboBox<>();
-		cbStadiumCountry.setBounds(15, 25, 170, 20);
-		pnlStadiumCountry.add(cbStadiumCountry);
-
-		JPanel pnlStadiumLength = new JPanel();
-		pnlStadiumLength.setLayout(null);
-		pnlStadiumLength.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Largo",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlStadiumLength.setBounds(210, 10, 100, 65);
-		getContentPane().add(pnlStadiumLength);
-
-		spnStadiumLength = new JSpinner();
-		spnStadiumLength.setModel(new SpinnerNumberModel(0, 0, 255, 1));
-		spnStadiumLength.setBounds(25, 25, 50, 20);
-		pnlStadiumLength.add(spnStadiumLength);
-
-		JPanel pnlStadiumWidth = new JPanel();
-		pnlStadiumWidth.setLayout(null);
-		pnlStadiumWidth.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Ancho",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlStadiumWidth.setBounds(210, 75, 100, 65);
-		getContentPane().add(pnlStadiumWidth);
-
-		spnStadiumWidth = new JSpinner();
-		spnStadiumWidth.setBounds(25, 25, 50, 20);
-		pnlStadiumWidth.add(spnStadiumWidth);
-
-		JPanel pnlStadiumSittingCapacity = new JPanel();
-		pnlStadiumSittingCapacity.setLayout(null);
-		pnlStadiumSittingCapacity.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-				"P\u00FAblico sentado", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlStadiumSittingCapacity.setBounds(10, 140, 100, 65);
-		getContentPane().add(pnlStadiumSittingCapacity);
-
-		spnStadiumSittingCapacity = new JSpinner();
-		spnStadiumSittingCapacity.setModel(new SpinnerNumberModel(0, 0, 250000, 1));
-		spnStadiumSittingCapacity.setBounds(15, 25, 70, 20);
-		pnlStadiumSittingCapacity.add(spnStadiumSittingCapacity);
-
-		JPanel pnlStadiumStandingCapacity = new JPanel();
-		pnlStadiumStandingCapacity.setLayout(null);
-		pnlStadiumStandingCapacity.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-				"P\u00FAblico de pie", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlStadiumStandingCapacity.setBounds(110, 140, 100, 65);
-		getContentPane().add(pnlStadiumStandingCapacity);
-
-		spnStadiumStandingCapacity = new JSpinner();
-		spnStadiumStandingCapacity.setModel(new SpinnerNumberModel(0, 0, 250000, 1));
-		spnStadiumStandingCapacity.setBounds(15, 25, 70, 20);
-		pnlStadiumStandingCapacity.add(spnStadiumStandingCapacity);
-
-		JPanel pnlStadiumConstructionYear = new JPanel();
-		pnlStadiumConstructionYear.setLayout(null);
-		pnlStadiumConstructionYear.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-				"A\u00F1o construcci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlStadiumConstructionYear.setBounds(210, 140, 100, 65);
-		getContentPane().add(pnlStadiumConstructionYear);
-
-		spnStadiumConstructionYear = new JSpinner();
-		spnStadiumConstructionYear.setModel(new SpinnerNumberModel(0, 0, 3000, 1));
-		spnStadiumConstructionYear.setBounds(25, 25, 50, 20);
-		pnlStadiumConstructionYear.add(spnStadiumConstructionYear);
 
 		JPanel pnlStadiumImage = new JPanel();
 		pnlStadiumImage.setBorder(new TitledBorder(null, "Imagen", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlStadiumImage.setBounds(310, 10, 400, 320);
+		pnlStadiumImage.setBounds(260, 10, 400, 320);
 		getContentPane().add(pnlStadiumImage);
 		pnlStadiumImage.setLayout(null);
 
@@ -220,7 +141,7 @@ public class StadiumInfo extends JDialog {
 				btnStadiumCancelActionPerformed();
 			}
 		});
-		btnStadiumCancel.setBounds(630, 340, 80, 25);
+		btnStadiumCancel.setBounds(580, 340, 80, 25);
 		getContentPane().add(btnStadiumCancel);
 
 		JButton btnStadiumAccept = new JButton("Aceptar");
@@ -230,31 +151,111 @@ public class StadiumInfo extends JDialog {
 				btnStadiumAcceptActionPerformed();
 			}
 		});
-		btnStadiumAccept.setBounds(530, 340, 80, 25);
+		btnStadiumAccept.setBounds(480, 340, 80, 25);
 		getContentPane().add(btnStadiumAccept);
 
-		EntityTeamsPanel pnlStadiumTeams = new EntityTeamsPanel(10, 205, 200, 65, getContentPane(), teams,
-				stadium.getTeams());
-		getContentPane().add(pnlStadiumTeams);
+		JPanel pnlStadiumData = new JPanel();
+		pnlStadiumData.setBorder(new TitledBorder(null, "Datos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlStadiumData.setBounds(10, 10, 250, 320);
+		getContentPane().add(pnlStadiumData);
+		pnlStadiumData.setLayout(null);
+
+		txtStadiumName = new JTextField();
+		txtStadiumName.setBounds(25, 45, 200, 20);
+		txtStadiumName.setColumns(10);
+		pnlStadiumData.add(txtStadiumName);
+
+		JLabel lblStadiumName = new JLabel("Nombre:");
+		lblStadiumName.setLabelFor(txtStadiumName);
+		lblStadiumName.setBounds(25, 30, 45, 15);
+		pnlStadiumData.add(lblStadiumName);
+
+		spnStadiumSittingCapacity = new JSpinner();
+		spnStadiumSittingCapacity.setBounds(155, 75, 70, 20);
+		pnlStadiumData.add(spnStadiumSittingCapacity);
+		spnStadiumSittingCapacity.setModel(new SpinnerNumberModel(0, 0, 250000, 1));
+
+		JLabel lblStadiumSittingCapacity = new JLabel("Aforo sentados:");
+		lblStadiumSittingCapacity.setBounds(25, 75, 90, 20);
+		pnlStadiumData.add(lblStadiumSittingCapacity);
+
+		spnStadiumStandingCapacity = new JSpinner();
+		spnStadiumStandingCapacity.setBounds(155, 105, 70, 20);
+		pnlStadiumData.add(spnStadiumStandingCapacity);
+		spnStadiumStandingCapacity.setModel(new SpinnerNumberModel(0, 0, 250000, 1));
+
+		JLabel lblStadiumStandingCapacity = new JLabel("Aforo de pie:");
+		lblStadiumStandingCapacity.setBounds(25, 105, 90, 20);
+		pnlStadiumData.add(lblStadiumStandingCapacity);
+
+		spnStadiumLength = new JSpinner();
+		spnStadiumLength.setBounds(175, 135, 50, 20);
+		pnlStadiumData.add(spnStadiumLength);
+		spnStadiumLength.setModel(new SpinnerNumberModel(0, 0, 255, 1));
+
+		JLabel lblStadiumLength = new JLabel("Largo:");
+		lblStadiumLength.setLabelFor(spnStadiumLength);
+		lblStadiumLength.setBounds(130, 135, 40, 20);
+		pnlStadiumData.add(lblStadiumLength);
+
+		spnStadiumWidth = new JSpinner();
+		spnStadiumWidth.setBounds(70, 135, 50, 20);
+		pnlStadiumData.add(spnStadiumWidth);
+
+		JLabel lblStadiumWidth = new JLabel("Ancho:");
+		lblStadiumWidth.setLabelFor(spnStadiumWidth);
+		lblStadiumWidth.setBounds(25, 135, 40, 20);
+		pnlStadiumData.add(lblStadiumWidth);
+
+		spnStadiumConstructionYear = new JSpinner();
+		spnStadiumConstructionYear.setBounds(175, 165, 50, 20);
+		pnlStadiumData.add(spnStadiumConstructionYear);
+		spnStadiumConstructionYear.setModel(new SpinnerNumberModel(0, 0, 3000, 1));
+
+		JLabel lblStadiumConstructionYear = new JLabel("Año de construcción:");
+		lblStadiumConstructionYear.setBounds(25, 165, 110, 20);
+		pnlStadiumData.add(lblStadiumConstructionYear);
+
+		cbStadiumCountry = new JComboBox<>();
+		cbStadiumCountry.setBounds(75, 195, 150, 20);
+		pnlStadiumData.add(cbStadiumCountry);
+
+		JLabel lnlStadiumCountry = new JLabel("País:");
+		lnlStadiumCountry.setLabelFor(cbStadiumCountry);
+		lnlStadiumCountry.setBounds(25, 195, 40, 20);
+		pnlStadiumData.add(lnlStadiumCountry);
+
+		if (!createStadium) {
+			EntityTeamsPanel pnlStadiumTeams = new EntityTeamsPanel(25, 225, 200, 65, getContentPane(), teams,
+					stadium.getTeams());
+			pnlStadiumData.add(pnlStadiumTeams);
+		}
 	}
 
 	private void formWindowOpened() {
-		this.setTitle(stadium.getHeader().getId() + " - " + stadium.getName());
 
 		List<String> listCountries = countryService.loadCountryNames(countries);
 		listCountries.add(0, StringUtils.EMPTY);
 
 		cbStadiumCountry.setModel(new DefaultComboBoxModel<>(listCountries.toArray(new String[listCountries.size()])));
 
-		txtStadiumName.setText(stadium.getName());
-		cbStadiumCountry.setSelectedIndex(stadium.getCountryId() + 1);
-		spnStadiumWidth.setValue(stadium.getWidth());
-		spnStadiumLength.setValue(stadium.getLength());
-		spnStadiumSittingCapacity.setValue(stadium.getSittingCapacity());
-		spnStadiumStandingCapacity.setValue(stadium.getStandingCapacity());
-		spnStadiumConstructionYear.setValue(stadium.getConstructionYear());
+		if (createStadium) {
+			stadiumService.initilizeHeader(stadiums, stadium);
+		} else {
+			txtStadiumName.setText(stadium.getName());
+			cbStadiumCountry.setSelectedIndex(stadium.getCountryId() + 1);
+			spnStadiumWidth.setValue(stadium.getWidth());
+			spnStadiumLength.setValue(stadium.getLength());
+			spnStadiumSittingCapacity.setValue(stadium.getSittingCapacity());
+			spnStadiumStandingCapacity.setValue(stadium.getStandingCapacity());
+			spnStadiumConstructionYear.setValue(stadium.getConstructionYear());
 
-		loadStadiumImage();
+			loadStadiumImage();
+		}
+
+		this.setTitle(
+				stadium.getHeader().getId() + " - " + StringUtils.defaultString(stadium.getName(), "Nuevo estadio"));
+
 	}
 
 	private void loadStadiumImage() {
@@ -304,9 +305,16 @@ public class StadiumInfo extends JDialog {
 
 		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = chooser.getSelectedFile();
+			String validationMessage = PcfFileHelper.validateImage(selectedFile, Stadium.STADIUM_IMAGE_WIDTH,
+					Stadium.STADIUM_IMAGE_HEIGHT);
 			try {
-				stadiumService.saveImage(selectedFile, stadium.getHeader().getId());
-				loadStadiumImage();
+				if (StringUtils.isBlank(validationMessage)) {
+					stadiumService.saveImage(selectedFile, stadium.getHeader().getId());
+					loadStadiumImage();
+				} else {
+					JOptionPane.showMessageDialog(this, validationMessage, "Error", JOptionPane.ERROR_MESSAGE);
+				}
+
 			} catch (StadiumImageSaveException exception) {
 				JOptionPane.showMessageDialog(this, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}

@@ -25,10 +25,17 @@ import com.pcfutbolmania.pcf2001.model.Entity;
 import com.pcfutbolmania.pcf2001.model.Header;
 import com.pcfutbolmania.pcf2001.model.stadium.Stadium;
 import com.pcfutbolmania.pcf2001.service.fdi.AbstractEntityService;
+import com.pcfutbolmania.pcf2001.service.fdi.HeaderService;
 
 public class StadiumService extends AbstractEntityService {
 
 	private static final String STADIUM_IMAGE_EXTENSION = ".jpg";
+
+	private HeaderService headerService;
+
+	public StadiumService() {
+		this.headerService = new HeaderService();
+	}
 
 	@Override
 	protected Map<Integer, Stadium> load(RandomAccessFile file, Map<Integer, Header> headers) throws EpcfException {
@@ -115,6 +122,12 @@ public class StadiumService extends AbstractEntityService {
 		} catch (IOException e) {
 			throw new StadiumImageDeleteException(e);
 		}
+	}
+
+	public void initilizeHeader(Map<Integer, Stadium> stadiums, Stadium stadium) {
+		Header header = new Header();
+		header.setId(headerService.getIdToCreateEntity(stadiums));
+		stadium.setHeader(header);
 	}
 
 	private String getFilePath(int stadiumId) {

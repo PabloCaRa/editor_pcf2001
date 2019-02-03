@@ -6,6 +6,9 @@ import com.pcfutbolmania.pcf2001.model.Entity;
 
 public class Stadium extends Entity {
 
+	public static final int STADIUM_IMAGE_WIDTH = 360;
+	public static final int STADIUM_IMAGE_HEIGHT = 240;
+
 	private int width;
 	private int length;
 

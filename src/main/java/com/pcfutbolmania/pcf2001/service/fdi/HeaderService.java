@@ -2,8 +2,11 @@ package com.pcfutbolmania.pcf2001.service.fdi;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import com.pcfutbolmania.pcf2001.model.Entity;
 import com.pcfutbolmania.pcf2001.model.Header;
@@ -65,6 +68,13 @@ public class HeaderService {
 			}
 		});
 
+	}
+
+	public int getIdToCreateEntity(Map<Integer, ? extends Entity> entities) {
+		Comparator<Header> comparator = Comparator.comparing(Header::getId);
+		List<Header> headers = entities.values().parallelStream().map(Entity::getHeader).collect(Collectors.toList());
+		int max = headers.parallelStream().max(comparator).get().getId();
+		return max + 1;
 	}
 
 }
