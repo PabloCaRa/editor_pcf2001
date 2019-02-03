@@ -236,9 +236,14 @@ public class TeamService extends AbstractEntityService {
 				coaches.get(coachId).getTeams().add(teamId);
 			});
 
-			playerIds.parallelStream().forEach(playerId -> {
-				players.get(playerId).getTeams().add(teamId);
+			team.getRegisteredPlayers().parallelStream().forEach(registeredPlayerId -> {
+				players.get(registeredPlayerId).getTeamsRegistered().add(teamId);
 			});
+
+			team.getUnregisteredPlayers().parallelStream().forEach(unregisteredPlayerId -> {
+				players.get(unregisteredPlayerId).getTeamsUnregistered().add(teamId);
+			});
+
 		});
 	}
 

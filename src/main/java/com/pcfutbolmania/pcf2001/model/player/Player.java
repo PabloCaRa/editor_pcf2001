@@ -50,7 +50,8 @@ public class Player extends Entity {
 
 	private Parameters parameters;
 
-	private List<Integer> teams;
+	private List<Integer> teamsRegistered;
+	private List<Integer> teamsUnregistered;
 
 	public short getLengthSum() {
 		return lengthSum;
@@ -292,12 +293,20 @@ public class Player extends Entity {
 		this.parameters = parameters;
 	}
 
-	public List<Integer> getTeams() {
-		return teams;
+	public List<Integer> getTeamsRegistered() {
+		return teamsRegistered;
 	}
 
-	public void setTeams(List<Integer> teams) {
-		this.teams = teams;
+	public void setTeamsRegistered(List<Integer> teamsRegistered) {
+		this.teamsRegistered = teamsRegistered;
+	}
+
+	public List<Integer> getTeamsUnregistered() {
+		return teamsUnregistered;
+	}
+
+	public void setTeamsUnregistered(List<Integer> teamsUnregistered) {
+		this.teamsUnregistered = teamsUnregistered;
 	}
 
 	@Override

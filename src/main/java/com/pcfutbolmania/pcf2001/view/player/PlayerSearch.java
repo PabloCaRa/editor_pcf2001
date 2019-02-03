@@ -25,7 +25,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.commons.lang3.StringUtils;
@@ -121,7 +120,7 @@ public class PlayerSearch extends JDialog {
 
 	private SearchTeamPanel pnlSearchTeamPanel;
 
-	private JScrollPane pnlSearchPlayerResults;
+	private JPanel pnlSearchPlayerResults;
 
 	/**
 	 * Create the dialog.
@@ -721,22 +720,25 @@ public class PlayerSearch extends JDialog {
 		lblMaxRightFreeKick.setBounds(25, 75, 50, 15);
 		pnlSearchPlayerRightFreeKick.add(lblMaxRightFreeKick);
 
-		pnlSearchPlayerResults = new JScrollPane();
-		pnlSearchPlayerResults.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		pnlSearchPlayerResults.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		pnlSearchPlayerResults.setBorder(null);
-		pnlSearchPlayerResults.setViewportBorder(
-				new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlSearchPlayerResults = new JPanel();
+		pnlSearchPlayerResults
+				.setBorder(new TitledBorder(null, "Resultados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlSearchPlayerResults.setBounds(310, 400, 500, 220);
 		getContentPane().add(pnlSearchPlayerResults);
+		pnlSearchPlayerResults.setLayout(null);
+
+		JScrollPane scpSearchPlayerResults = new JScrollPane();
+		scpSearchPlayerResults.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scpSearchPlayerResults.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scpSearchPlayerResults.setBounds(10, 15, 480, 195);
+		pnlSearchPlayerResults.add(scpSearchPlayerResults);
 
 		lstResults = new JList<>();
-		lstResults.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lstResults.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstResults.setCellRenderer(new SearchResultsCellRenderer());
-		pnlSearchPlayerResults.setViewportView(lstResults);
+		scpSearchPlayerResults.setViewportView(lstResults);
 
-		pnlSearchTeamPanel = new SearchTeamPanel(10, 400, 300, 220, getContentPane(), teams, teamSearchService);
+		pnlSearchTeamPanel = new SearchTeamPanel(10, 400, 300, 220, getContentPane(), teams, teamSearchService, true);
 		getContentPane().add(pnlSearchTeamPanel);
 
 		JButton btnSearch = new JButton("Buscar");
@@ -858,6 +860,7 @@ public class PlayerSearch extends JDialog {
 		}
 
 		toSearch.setFree(pnlSearchTeamPanel.getChkSearchPlayerNoTeam().isSelected());
+		toSearch.setUnregistered(pnlSearchTeamPanel.getChkSearchPlayerUnregistered().isSelected());
 
 		DefaultListModel<Player> model = new DefaultListModel<>();
 		List<Player> filteredPlayers = playerSearchService.searchPlayers(toSearch, players);
@@ -867,10 +870,9 @@ public class PlayerSearch extends JDialog {
 		lstResults.setModel(model);
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.valueOf(filteredPlayers.size()));
+		sb.append(String.valueOf(model.size()));
 		sb.append(StringUtils.SPACE);
-		sb.append(filteredPlayers.size() == 1 ? "jugador encontrado" : "jugadores encontrados");
-		pnlSearchPlayerResults.setViewportBorder(
-				new TitledBorder(null, sb.toString(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		sb.append(model.size() == 1 ? "jugador encontrado" : "jugadores encontrados");
+		pnlSearchPlayerResults.setBorder(new TitledBorder(sb.toString()));
 	}
 }

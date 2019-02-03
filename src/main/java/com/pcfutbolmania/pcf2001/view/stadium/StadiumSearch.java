@@ -275,7 +275,7 @@ public class StadiumSearch extends JDialog {
 		lblSearchStadiumStandingCapacityMax.setBounds(15, 75, 50, 15);
 		pnlSearchStadiumStandingCapacity.add(lblSearchStadiumStandingCapacityMax);
 
-		pnlSearchTeamPanel = new SearchTeamPanel(10, 140, 300, 220, getContentPane(), teams, teamSearchService);
+		pnlSearchTeamPanel = new SearchTeamPanel(10, 140, 300, 220, getContentPane(), teams, teamSearchService, false);
 		getContentPane().add(pnlSearchTeamPanel);
 
 		pnlSearchStadiumResults = new JPanel();

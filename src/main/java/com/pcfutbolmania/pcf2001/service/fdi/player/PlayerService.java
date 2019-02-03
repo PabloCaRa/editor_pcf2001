@@ -100,7 +100,8 @@ public class PlayerService extends AbstractEntityService {
 			}
 
 			player.setParameters(readParameters(file));
-			player.setTeams(new ArrayList<>());
+			player.setTeamsRegistered(new ArrayList<>());
+			player.setTeamsUnregistered(new ArrayList<>());
 
 		} catch (IOException e) {
 			throw new PlayerLoadException(e);

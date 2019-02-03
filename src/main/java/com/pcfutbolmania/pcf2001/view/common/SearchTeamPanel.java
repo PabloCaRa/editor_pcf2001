@@ -8,6 +8,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +41,17 @@ public class SearchTeamPanel extends JPanel {
 	private JTextField txtSearchPlayerTeam;
 	private JButton btnSearchTeam;
 	private JCheckBox chkSearchPlayerNoTeam;
+	private JCheckBox chkSearchPlayerUnregistered;
+
+	private boolean isPlayerSearch;
 
 	public SearchTeamPanel(int x, int y, int width, int height, Container contentPane, Map<Integer, Team> teams,
-			TeamSearchService teamSearchService) {
+			TeamSearchService teamSearchService, boolean isPlayerSearch) {
 
 		this.teamSearchService = teamSearchService;
 		this.teams = teams;
+
+		this.isPlayerSearch = isPlayerSearch;
 
 		this.setBounds(x, y, width, height);
 		this.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Equipo", TitledBorder.LEADING,
@@ -65,7 +72,14 @@ public class SearchTeamPanel extends JPanel {
 		lstTeams.setBorder(null);
 		lstTeams.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstTeams.setCellRenderer(new SearchResultsCellRenderer());
+		lstTeams.setToolTipText("Click con el botón derecho para eliminar la selección");
 		pnlSearchPlayerTeamResults.setViewportView(lstTeams);
+		lstTeams.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lstTeamsMouseClicked(e);
+			}
+		});
 
 		txtSearchPlayerTeam = new JTextField();
 		txtSearchPlayerTeam.setBounds(10, 30, 180, 20);
@@ -95,12 +109,25 @@ public class SearchTeamPanel extends JPanel {
 				chkSearchPlayerNoTeamItemStateChanged(e);
 			}
 		});
-		chkSearchPlayerNoTeam.setBounds(10, 55, 90, 20);
+		chkSearchPlayerNoTeam.setBounds(10, 55, 80, 20);
+
+		chkSearchPlayerUnregistered = new JCheckBox("Fuera de plantilla");
+		getChkSearchPlayerUnregistered().addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				chkSearchPlayerUnregisteredItemStateChanged(e);
+			}
+		});
+		getChkSearchPlayerUnregistered().setBounds(90, 55, 120, 20);
+
 		this.setLayout(null);
 		this.add(pnlSearchPlayerTeamResults);
 		this.add(txtSearchPlayerTeam);
 		this.add(btnSearchTeam);
 		this.add(chkSearchPlayerNoTeam);
+		this.add(chkSearchPlayerUnregistered);
+
+		chkSearchPlayerUnregistered.setVisible(isPlayerSearch);
 	}
 
 	private void btnSearchTeamActionPerformed() {
@@ -113,16 +140,25 @@ public class SearchTeamPanel extends JPanel {
 	}
 
 	private void chkSearchPlayerNoTeamItemStateChanged(ItemEvent e) {
+
+		txtSearchPlayerTeam.setEnabled(!chkSearchPlayerNoTeam.isSelected());
+		btnSearchTeam.setEnabled(!chkSearchPlayerNoTeam.isSelected());
+		lstTeams.setEnabled(!chkSearchPlayerNoTeam.isSelected());
+		chkSearchPlayerUnregistered.setEnabled(!chkSearchPlayerNoTeam.isSelected());
+
 		if (chkSearchPlayerNoTeam.isSelected()) {
 			txtSearchPlayerTeam.setText(StringUtils.EMPTY);
-			txtSearchPlayerTeam.setEnabled(false);
-			btnSearchTeam.setEnabled(false);
 			lstTeams.setModel(new DefaultListModel<Team>());
-			lstTeams.setEnabled(false);
-		} else {
-			txtSearchPlayerTeam.setEnabled(true);
-			btnSearchTeam.setEnabled(true);
-			lstTeams.setEnabled(true);
+		}
+	}
+
+	private void chkSearchPlayerUnregisteredItemStateChanged(ItemEvent e) {
+		chkSearchPlayerNoTeam.setEnabled(!chkSearchPlayerUnregistered.isSelected());
+	}
+
+	private void lstTeamsMouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 1 && (e.getButton() == MouseEvent.BUTTON2 || e.getButton() == MouseEvent.BUTTON3)) {
+			lstTeams.clearSelection();
 		}
 	}
 
@@ -132,6 +168,10 @@ public class SearchTeamPanel extends JPanel {
 
 	public JCheckBox getChkSearchPlayerNoTeam() {
 		return this.chkSearchPlayerNoTeam;
+	}
+
+	public JCheckBox getChkSearchPlayerUnregistered() {
+		return chkSearchPlayerUnregistered;
 	}
 
 }

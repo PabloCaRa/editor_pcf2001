@@ -107,7 +107,7 @@ public class CoachSearch extends JDialog {
 		lstSearchCoachResults.setCellRenderer(new SearchResultsCellRenderer());
 		scpSearchCoachResults.setViewportView(lstSearchCoachResults);
 
-		pnlSearchTeamPanel = new SearchTeamPanel(10, 75, 300, 220, getContentPane(), teams, teamSearchService);
+		pnlSearchTeamPanel = new SearchTeamPanel(10, 75, 300, 220, getContentPane(), teams, teamSearchService, false);
 		getContentPane().add(pnlSearchTeamPanel);
 
 		JButton btnSearchCoachSearch = new JButton("Buscar");

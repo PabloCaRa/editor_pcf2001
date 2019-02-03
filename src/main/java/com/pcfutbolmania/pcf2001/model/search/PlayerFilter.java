@@ -73,6 +73,8 @@ public class PlayerFilter {
 
 	private boolean free;
 
+	private boolean isUnregistered;
+
 	public String getName() {
 		return name;
 	}
@@ -423,5 +425,13 @@ public class PlayerFilter {
 
 	public void setFree(boolean free) {
 		this.free = free;
+	}
+
+	public boolean isUnregistered() {
+		return isUnregistered;
+	}
+
+	public void setUnregistered(boolean isUnregistered) {
+		this.isUnregistered = isUnregistered;
 	}
 }

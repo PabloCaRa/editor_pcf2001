@@ -67,20 +67,20 @@ public class PlayerSearchService {
 								&& player.getParameters().getLeftFreeKick() <= filter.getLeftFreeKickMax().intValue())
 						&& (player.getParameters().getRightFreeKick() >= filter.getRightFreeKickMin().intValue()
 								&& player.getParameters().getRightFreeKick() <= filter.getRightFreeKickMax().intValue())
-						&& (filter.isFree() ? CollectionUtils.isEmpty(player.getTeams())
+						&& (filter.isFree()
+								? CollectionUtils.isEmpty(player.getTeamsRegistered())
+										&& CollectionUtils.isEmpty(player.getTeamsUnregistered())
 								: (filter.getTeamId() != null
-										? CollectionUtils.containsAny(player.getTeams(), filter.getTeamId())
-										: true)))
+										? CollectionUtils.containsAny(player.getTeamsRegistered(), filter.getTeamId())
+												|| CollectionUtils.containsAny(player.getTeamsUnregistered(),
+														filter.getTeamId())
+										: true))
+						&& (filter.isUnregistered() ? CollectionUtils.isEmpty(player.getTeamsRegistered())
+								&& CollectionUtils.isNotEmpty(player.getTeamsUnregistered()) : true))
 				.sorted((player1, player2) -> StringUtils.compareIgnoreCase(player1.getName(), player2.getName()))
 				.collect(Collectors.toList());
 
-		List<Player> again = playersFiltered.stream()
-				.filter(player -> filter.isFree() ? CollectionUtils.isEmpty(player.getTeams())
-						: filter.getTeamId() != null
-								? CollectionUtils.containsAny(player.getTeams(), filter.getTeamId())
-								: true)
-				.collect(Collectors.toList());
-		return again;
+		return playersFiltered;
 	}
 
 }
