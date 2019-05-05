@@ -34,6 +34,7 @@ import com.pcfutbolmania.pcf2001.helper.PcfFileHelper;
 import com.pcfutbolmania.pcf2001.model.pak.Country;
 import com.pcfutbolmania.pcf2001.model.stadium.Stadium;
 import com.pcfutbolmania.pcf2001.model.team.Team;
+import com.pcfutbolmania.pcf2001.service.fdi.HeaderService;
 import com.pcfutbolmania.pcf2001.service.fdi.stadium.StadiumService;
 import com.pcfutbolmania.pcf2001.service.pak.CountryService;
 import com.pcfutbolmania.pcf2001.view.common.EntityTeamsPanel;
@@ -44,6 +45,7 @@ public class StadiumInfo extends JDialog {
 
 	private StadiumService stadiumService;
 	private CountryService countryService;
+	private HeaderService headerService;
 
 	private Map<Integer, Stadium> stadiums;
 	private Map<Integer, Country> countries;
@@ -78,6 +80,7 @@ public class StadiumInfo extends JDialog {
 
 		stadiumService = new StadiumService();
 		countryService = new CountryService();
+		headerService = new HeaderService();
 
 		this.stadium = stadium;
 		this.stadiums = stadiums;
@@ -152,7 +155,7 @@ public class StadiumInfo extends JDialog {
 
 		JPanel pnlStadiumData = new JPanel();
 		pnlStadiumData.setBorder(new TitledBorder(null, "Datos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlStadiumData.setBounds(10, 10, 250, 320);
+		pnlStadiumData.setBounds(10, 10, 250, 240);
 		getContentPane().add(pnlStadiumData);
 		pnlStadiumData.setLayout(null);
 
@@ -223,9 +226,9 @@ public class StadiumInfo extends JDialog {
 		pnlStadiumData.add(lnlStadiumCountry);
 
 		if (!createStadium) {
-			EntityTeamsPanel pnlStadiumTeams = new EntityTeamsPanel(25, 225, 200, 65, getContentPane(), teams,
+			EntityTeamsPanel pnlStadiumTeams = new EntityTeamsPanel(10, 250, 250, 80, getContentPane(), teams,
 					stadium.getTeams());
-			pnlStadiumData.add(pnlStadiumTeams);
+			getContentPane().add(pnlStadiumTeams);
 		}
 	}
 
@@ -237,7 +240,7 @@ public class StadiumInfo extends JDialog {
 		cbStadiumCountry.setModel(new DefaultComboBoxModel<>(listCountries.toArray(new String[listCountries.size()])));
 
 		if (createStadium) {
-			stadiumService.initilizeHeader(stadiums, stadium);
+			headerService.initializeHeader(stadiums, stadium);
 		} else {
 			txtStadiumName.setText(stadium.getName());
 			cbStadiumCountry.setSelectedIndex(stadium.getCountryId() + 1);

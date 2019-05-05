@@ -54,6 +54,13 @@ public class HeaderService {
 		});
 	}
 
+	public void initializeHeader(Map<Integer, ? extends Entity> entities, Entity entity) {
+		Header header = new Header();
+		header.setId(getIdToCreateEntity(entities));
+		header.setInit(getLastEndToCreateEntity(entities));
+		entity.setHeader(header);
+	}
+
 	public void createEntity(Map<Integer, ? extends Entity> entities, Entity entity) {
 		entities.values().parallelStream().forEach(entityToModify -> {
 			entityToModify.getHeader().setInit(entityToModify.getHeader().getInit() + Header.HEADER_BYTE_SIZE);
@@ -78,11 +85,11 @@ public class HeaderService {
 		});
 	}
 
-	public int getIdToCreateEntity(Map<Integer, ? extends Entity> entities) {
+	private int getIdToCreateEntity(Map<Integer, ? extends Entity> entities) {
 		return getLastHeader(entities).getId() + 1;
 	}
 
-	public int getLastEndToCreateEntity(Map<Integer, ? extends Entity> entities) {
+	private int getLastEndToCreateEntity(Map<Integer, ? extends Entity> entities) {
 		return getLastHeader(entities).getEnd();
 	}
 
