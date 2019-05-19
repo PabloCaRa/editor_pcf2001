@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.pcfutbolmania.pcf2001.controller.MainController;
 import com.pcfutbolmania.pcf2001.exception.EpcfException;
@@ -29,6 +30,7 @@ import com.pcfutbolmania.pcf2001.model.pak.Country;
 import com.pcfutbolmania.pcf2001.model.player.Player;
 import com.pcfutbolmania.pcf2001.model.stadium.Stadium;
 import com.pcfutbolmania.pcf2001.model.team.Team;
+import com.pcfutbolmania.pcf2001.view.coach.CoachInfo;
 import com.pcfutbolmania.pcf2001.view.coach.CoachSearch;
 import com.pcfutbolmania.pcf2001.view.player.PlayerSearch;
 import com.pcfutbolmania.pcf2001.view.stadium.StadiumInfo;
@@ -157,8 +159,9 @@ public class Main {
 					}
 
 				} catch (EpcfException | InterruptedException | ExecutionException exception) {
-					JOptionPane.showMessageDialog(frmEpcf, exception.getCause().getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmEpcf,
+							StringUtils.defaultIfBlank(exception.getCause().getMessage(), exception.getMessage()),
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 				if (filesLoaded) {
@@ -312,6 +315,14 @@ public class Main {
 		mnuCreate.add(mntmCreatePlayer);
 
 		JMenuItem mntmCreateCoach = new JMenuItem("Entrenador");
+		mntmCreateCoach.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CoachInfo coachInfo = new CoachInfo(new Coach(), coaches, teams, true);
+				coachInfo.setLocationRelativeTo(null);
+				coachInfo.setVisible(true);
+			}
+		});
 		mnuCreate.add(mntmCreateCoach);
 
 		JMenuItem mntmCreateStadium = new JMenuItem("Estadio");
