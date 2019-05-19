@@ -21,7 +21,9 @@ public class CoachSearchService {
 								: (filter.getTeamId() != null
 										? CollectionUtils.containsAny(coach.getTeams(), filter.getTeamId())
 										: true)))
-				.sorted((coach1, coach2) -> StringUtils.compareIgnoreCase(coach1.getName(), coach2.getName()))
+				.sorted((coach1, coach2) -> StringUtils.compareIgnoreCase(
+						StringUtils.defaultIfBlank(coach1.getName(), coach1.getShortName()),
+						StringUtils.defaultIfBlank(coach2.getName(), coach2.getShortName())))
 				.collect(Collectors.toList());
 
 		return filteredCoaches;
