@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -38,6 +40,7 @@ public class CoachSearch extends JDialog {
 	private CoachSearchService coachSearchService;
 
 	private Map<Integer, Coach> coaches;
+	private Map<Integer, Team> teams;
 
 	private JTextField txtSearchCoachName;
 	private JList<Coach> lstSearchCoachResults;
@@ -50,6 +53,13 @@ public class CoachSearch extends JDialog {
 	 * Create the dialog.
 	 */
 	public CoachSearch(Map<Integer, Coach> coaches, Map<Integer, Team> teams) {
+
+		teamSearchService = new TeamSearchService();
+		coachSearchService = new CoachSearchService();
+
+		this.coaches = coaches;
+		this.teams = teams;
+
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -57,11 +67,6 @@ public class CoachSearch extends JDialog {
 				formWindowOpened();
 			}
 		});
-
-		teamSearchService = new TeamSearchService();
-		coachSearchService = new CoachSearchService();
-
-		this.coaches = coaches;
 
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setResizable(false);
@@ -102,6 +107,12 @@ public class CoachSearch extends JDialog {
 		pnlSearchCoachResults.add(scpSearchCoachResults);
 
 		lstSearchCoachResults = new JList<>();
+		lstSearchCoachResults.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lstSearchCoachResultsMouseClicked(e);
+			}
+		});
 		lstSearchCoachResults.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstSearchCoachResults.setBounds(0, 0, 1, 1);
 		lstSearchCoachResults.setCellRenderer(new SearchResultsCellRenderer());
@@ -164,5 +175,13 @@ public class CoachSearch extends JDialog {
 		sb.append(filteredCoaches.size() == 1 ? "entrenador encontrado" : "entrenadores encontrados");
 		pnlSearchCoachResults
 				.setBorder(new TitledBorder(null, sb.toString(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	}
+
+	private void lstSearchCoachResultsMouseClicked(MouseEvent e) {
+		if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
+			CoachInfo coachInfo = new CoachInfo(lstSearchCoachResults.getSelectedValue(), coaches, teams, false);
+			coachInfo.setLocationRelativeTo(null);
+			coachInfo.setVisible(true);
+		}
 	}
 }
