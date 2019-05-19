@@ -45,12 +45,34 @@ public class CoachService extends AbstractEntityService {
 				coach.setNameLength(Short.reverseBytes(file.readShort()));
 				coach.setName(PcfStringHelper.read(coach.getNameLength(), file));
 
-				Integer length = coach.getHeader().getLength() - coach.getNameLength() - coach.getShortNameLength()
-						- 11;
+				coach.setHiddenInfoLength(Short.reverseBytes(file.readShort()));
+				coach.setHiddenInfo(PcfStringHelper.read(coach.getHiddenInfoLength(), file));
 
-				byte[] ddbb = new byte[length];
-				file.read(ddbb, 0, length);
-				coach.setDdbb(ddbb);
+				coach.setPlaySistemLength(Short.reverseBytes(file.readShort()));
+				coach.setPlaySistem(PcfStringHelper.read(coach.getPlaySistemLength(), file));
+
+				coach.setPalmaresLength(Short.reverseBytes(file.readShort()));
+				coach.setPalmares(PcfStringHelper.read(coach.getPalmaresLength(), file));
+
+				coach.setAnecdoteLength(Short.reverseBytes(file.readShort()));
+				coach.setAnecdote(PcfStringHelper.read(coach.getAnecdoteLength(), file));
+
+				coach.setLastSeasonLength(Short.reverseBytes(file.readShort()));
+				coach.setLastSeason(PcfStringHelper.read(coach.getLastSeasonLength(), file));
+
+				coach.setCoachTrajectoryLength(Short.reverseBytes(file.readShort()));
+				coach.setCoachTrajectory(PcfStringHelper.read(coach.getCoachTrajectoryLength(), file));
+
+				coach.setWasPlayer(file.read());
+
+				coach.setPlayerTrajectoryLength(Short.reverseBytes(file.readShort()));
+				coach.setPlayerTrajectory(PcfStringHelper.read(coach.getPlayerTrajectoryLength(), file));
+
+				if (coach.getWasPlayer() == 3) {
+					coach.setDeclarationsLength(Short.reverseBytes(file.readShort()));
+					coach.setDeclarations(PcfStringHelper.read(coach.getDeclarationsLength(), file));
+				}
+
 			}
 
 			coach.setTeams(new ArrayList<>());
@@ -82,7 +104,35 @@ public class CoachService extends AbstractEntityService {
 			if (!coach.isBasic()) {
 				file.writeShort(Short.reverseBytes(coach.getNameLength()));
 				PcfStringHelper.write(coach.getName(), coach.getNameLength(), file);
-				file.write(coach.getDdbb());
+
+				file.writeShort(Short.reverseBytes(coach.getHiddenInfoLength()));
+				PcfStringHelper.write(coach.getHiddenInfo(), coach.getHiddenInfoLength(), file);
+
+				file.writeShort(Short.reverseBytes(coach.getPlaySistemLength()));
+				PcfStringHelper.write(coach.getPlaySistem(), coach.getPlaySistemLength(), file);
+
+				file.writeShort(Short.reverseBytes(coach.getPalmaresLength()));
+				PcfStringHelper.write(coach.getPalmares(), coach.getPalmaresLength(), file);
+
+				file.writeShort(Short.reverseBytes(coach.getAnecdoteLength()));
+				PcfStringHelper.write(coach.getAnecdote(), coach.getAnecdoteLength(), file);
+
+				file.writeShort(Short.reverseBytes(coach.getLastSeasonLength()));
+				PcfStringHelper.write(coach.getLastSeason(), coach.getLastSeasonLength(), file);
+
+				file.writeShort(Short.reverseBytes(coach.getCoachTrajectoryLength()));
+				PcfStringHelper.write(coach.getCoachTrajectory(), coach.getCoachTrajectoryLength(), file);
+
+				file.write(coach.getWasPlayer());
+
+				file.writeShort(Short.reverseBytes(coach.getPlayerTrajectoryLength()));
+				PcfStringHelper.write(coach.getPlayerTrajectory(), coach.getPlayerTrajectoryLength(), file);
+
+				if (coach.getWasPlayer() == 3) {
+					file.writeShort(Short.reverseBytes(coach.getDeclarationsLength()));
+					PcfStringHelper.write(coach.getDeclarations(), coach.getDeclarationsLength(), file);
+				}
+
 			}
 
 		} catch (IOException e) {
